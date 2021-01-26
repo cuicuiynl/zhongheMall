@@ -50,6 +50,14 @@ module.exports = {
           loader: "file"
       },
       {
+          test: /\.less$/,    
+          loader: "style-loader!css-loader!less-loader"
+      },
+      {
+        test: /\.(eot|svg|ttf|woff|woff2)(\?\S*)?$/,
+        loader: 'file-loader'
+      },
+      {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: vueLoaderConfig
