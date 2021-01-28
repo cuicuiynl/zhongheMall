@@ -15,7 +15,7 @@ export default {
     height: 70px;
     background: #fff;
     font-size: 22px;
-    color: orange;
+    color: #199fff;
     line-height: 70px;
     letter-spacing: 2px;
     cursor: pointer;
