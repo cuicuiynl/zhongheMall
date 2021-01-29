@@ -8,57 +8,42 @@
             v-for="item in tabs" :key="item.value">{{item.label}}</div>
         </div>
         <div class="login-zone">
-          <div class="my-order">我的订单</div>
-          <span class="split-line"></span>
-          <div class="login-btn">
-            <span class="log" @click="login('log')">登录</span>
-            <span class="reg" @click="login('reg')">免费注册</span>
-          </div>
+          <slot name="right"></slot>
         </div>
     </div>
-    <login v-if="showLogin" :logType="logType" @closeLogin="closeLogin"></login>
   </div>
 </template>
 
 <script>
 import companyLogo from './companyLogo'
-import login from './login'
+import { mapState } from 'vuex'
 export default {
   name: 'headerNav',
   components: {
-    companyLogo,
-    login
+    companyLogo
   },
   props: {
-    actived: {
-      type: String,
-      default: 'goods'
+    tabs: {
+      type: Array,
+      default: () => {
+        return []
+      }
     }
   },
   data () {
     return {
-      tabs: [
-        {value: 'goods', label: '首页'},
-        {value: 'goodsList', label: '专利市场'}
-      ],
-      activedTab: 'goods',
-      showLogin: false,
-      logType: ''
     }
   },
+  computed: {
+    ...mapState({
+      activedTab: state => state.activedTab
+    })
+  },
   mounted () {
-    this.activedTab = this.actived
   },
   methods: {
     changeTab (val) {
       this.activedTab = val
-    },
-    login (val) {
-      this.showLogin = true
-      this.logType = val
-    },
-    closeLogin () {
-      this.showLogin = false
     }
   }
 }
@@ -125,32 +110,5 @@ export default {
     line-height: 40px;
     position: absolute;
     right: 0;
-    .my-order{
-      cursor: pointer;
-    }
-    .split-line{
-      width: 2px;
-      height: 14px;
-      background: #eee;
-      border-radius: 1px;
-      margin: 0 15px;
-    }
-    .login-btn{
-      margin: 0;
-      display: flex;
-    }
-    .log{
-      cursor: pointer;
-    }
-    .reg{
-      width: 96px;
-      height: 40px;
-      color: #fff;
-      text-align: center;
-      background: #199fff;
-      border-radius: 23px;
-      margin-left: 15px;
-      cursor: pointer;
-    }
 }
 </style>
