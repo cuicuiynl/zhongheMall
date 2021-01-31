@@ -1,0 +1,106 @@
+{
+    "responseCode": 200,
+    "responseMessage": "成功",
+    "data": [
+        {
+            "tag": "安全",
+            "total": 358,
+            "enabled": true
+        },
+        {
+            "tag": "电",
+            "total": 341,
+            "enabled": true
+        },
+        {
+            "tag": "水",
+            "total": 219,
+            "enabled": true
+        },
+        {
+            "tag": "保护",
+            "total": 198,
+            "enabled": true
+        },
+        {
+            "tag": "清洁",
+            "total": 173,
+            "enabled": true
+        },
+        {
+            "tag": "车",
+            "total": 170,
+            "enabled": true
+        },
+        {
+            "tag": "防护",
+            "total": 156,
+            "enabled": true
+        },
+        {
+            "tag": "高效",
+            "total": 147,
+            "enabled": true
+        },
+        {
+            "tag": "环保",
+            "total": 136,
+            "enabled": true
+        },
+        {
+            "tag": "检测",
+            "total": 128,
+            "enabled": true
+        },
+        {
+            "tag": "安全防护",
+            "total": 128,
+            "enabled": true
+        },
+        {
+            "tag": "高效率",
+            "total": 124,
+            "enabled": true
+        },
+        {
+            "tag": "自动",
+            "total": 122,
+            "enabled": true
+        },
+        {
+            "tag": "环境保护",
+            "total": 120,
+            "enabled": true
+        },
+        {
+            "tag": "建筑",
+            "total": 118,
+            "enabled": true
+        },
+        {
+            "tag": "加工",
+            "total": 108,
+            "enabled": true
+        },
+        {
+            "tag": "回收",
+            "total": 106,
+            "enabled": true
+        },
+        {
+            "tag": "处理",
+            "total": 100,
+            "enabled": true
+        },
+        {
+            "tag": "清洗",
+            "total": 88,
+            "enabled": true
+        },
+        {
+            "tag": "包",
+            "total": 87,
+            "enabled": true
+        }
+    ]
+}

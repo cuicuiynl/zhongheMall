@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import headerNav from '@/components/headerNav'
+import headerNav from './headerNav'
 import login from './login'
 import { mapState } from 'vuex'
 export default {

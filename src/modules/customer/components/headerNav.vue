@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import companyLogo from './companyLogo'
+import companyLogo from '@/components/companyLogo'
 import { mapState } from 'vuex'
 export default {
   name: 'headerNav',
@@ -40,10 +40,12 @@ export default {
     })
   },
   mounted () {
+    this.$store.commit('updateActivedTab', this.$route.name)
   },
   methods: {
     changeTab (val) {
-      this.activedTab = val
+      this.$store.commit('updateActivedTab', val)
+      this.$router.push({name: val})
     }
   }
 }
@@ -78,7 +80,7 @@ export default {
         position: absolute;
         width: 20px;
         height: 4px;
-        background: #199fff;
+        background: #14a8bd;
         border-radius: 3px;
         left: 50%;
         transform: translateX(-50%);
@@ -95,7 +97,7 @@ export default {
       position: absolute;
       width: 20px;
       height: 4px;
-      background: #199fff;
+      background: #14a8bd;
       border-radius: 3px;
       left: 50%;
       transform: translateX(-50%);

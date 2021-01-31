@@ -1,6 +1,6 @@
 <template>
-  <div class="goods-page">
-      <headerNavMall></headerNavMall>
+  <pageModal>
+    <div slot="pageContent">
       <div class="banner">
         <p class="banner-text">全网最真实的一手交易平台</p>
         <div class="search-wrap">
@@ -19,29 +19,46 @@
         </div>
       </div>
       <!-- 产品列表 -->
-      <div>
-        <el-tabs :tab-position="tabPosition" style="height: 600px;">
-          <el-tab-pane :label="item.name" v-for="item in goodlist" :key="item.category">
-
-          </el-tab-pane>
-        </el-tabs>
+      <el-tabs :tab-position="tabPosition">
+        <el-tab-pane :label="item.name" v-for="item in goodlist" :key="item.category">
+          <div class="flex-between flex-wrap">
+            <template v-for="(item2, index2) in 12">
+              <el-card shadow="hover" :key="item2" v-if="index2 < 10" class="card-body">
+                <img :src="`/static/imgs/C-${item.category}.png`" class="image">
+                <p class="title">一种用于皮包自动除尘涂油保养的装置</p>
+                <div class="flex-between">
+                  <span class="price1">￥20000</span>
+                  <span class="price2"><span class="icon">VIP</span><span class="num">￥15000</span></span>
+                </div>
+              </el-card>
+            </template>
+          </div>
+          <div class="center"><el-button type="text" class="btn-style" @click="getMore(item.category)">查看更多>>>></el-button></div>
+        </el-tab-pane>
+      </el-tabs>
+      <!-- 交易流程 -->
+      <div class="flow-wrap">
+        <span class="flow-title">专利交易流程</span>
+        <p class="flow-subtitle">优质专利 流程便捷</p>
+        <img src="/static/imgs/flow.png" class="flow-img">
       </div>
-
-  </div>
+      <img src="/static/imgs/adv.png">
+    </div>
+  </pageModal>
 </template>
 
 <script>
-import headerNavMall from '@/components/headerNavMall'
+import pageModal from './components/pageModal'
 export default {
   name: 'goods',
   components: {
-    headerNavMall
+    pageModal
   },
   data () {
     return {
       // 搜索条件
       searchCondition: '',
-      tabPosition: 'left',
+      tabPosition: 'top',
       keyWords: ['急救', '手机零部件制造', '自动', '包装', '加工'],
       goodlist: [
         {name: '人类生活必须', category: 'A', list: []},
@@ -56,21 +73,28 @@ export default {
     }
   },
   methods: {
+    // 搜索
     handleSearch (val = '') {
       if (val) {
         let word = val || this.searchCondition
         this.$router.push({name: 'goodsList', query: { word }})
       }
+    },
+    // 查看更多
+    getMore (val) {
+      this.$store.commit('updateActivedTab', this.$route.name)
+      this.$router.push({
+        name: 'patentDetails',
+        params: {
+          id: this.patent.id || ''
+        }
+      })
     }
   }
 }
 </script>
 
 <style lang="less" scoped>
-.goods-page{
-  width: 1190px;
-  margin: 0 auto;
-}
 .banner {
   width: 1190px;
   margin-top:20px;
@@ -78,7 +102,10 @@ export default {
   // margin: 20px auto 0;
   border-radius: 10px;
   overflow: hidden;
-  background: linear-gradient(45deg, #0885de, transparent);
+  // background: linear-gradient(45deg, #0885de, transparent);
+  // background: linear-gradient(90deg, rgba(102, 177, 255, .92), #1e5c9c,rgba(102, 177, 255, .92));
+  background: url('/static/imgs/banner.jpg') no-repeat;
+  background-size: 100%;
   height: 340px;
   text-align: center;
   .banner-text{
@@ -99,5 +126,100 @@ export default {
     font-size: 14px;
     cursor: pointer;
   }
+}
+.card-body{
+  cursor: pointer;
+  width: 220px;
+  margin-bottom: 20px;
+  /deep/.el-card__body{
+    padding: 13px;
+  }
+  .image{
+    width: 100%;
+  }
+  .title{
+    margin: 8px 0 26px;
+  }
+  .price1{
+    font-size: 18px;
+    font-weight: 700;
+  }
+  .price2{
+    display: flex;
+    border: 1px solid gold;
+    border-radius: 3px;
+    padding: 0 4px 0 4px;
+    align-items: center;
+    .icon{
+      margin-right: 2px;
+      color: #fff;
+      background: linear-gradient(45deg, gold, transparent);
+      padding: 1px 2px;
+      border-radius: 3px;
+      font-style: italic;
+    }
+    .num{
+      font-size: 16px;
+      font-weight: 700;
+      color: #ff5858;
+    }
+  }
+}
+.btn-style{
+  color: #999;
+}
+.flow-wrap{
+  text-align: center;
+  padding: 40px 0 100px 0;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  background: url('/static/imgs/background.jpg') no-repeat;
+  background-size: 100%;
+  // background: linear-gradient(90deg, rgba(102, 177, 255, .92), #1e5c9c,rgba(102, 177, 255, .92));
+  border-radius: 10px;
+  background-size: 100%;
+  .flow-img{
+    width: 80%;
+  }
+  .flow-title{
+    font-size: 30px;
+    position: relative;
+    padding: 24px;
+    color: #fff;
+    &::before{
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: -3em;
+      transform: translateY(-50%);
+      background-color: silver;
+      height: 1px;
+      width: 3em;
+    }
+    &::after{
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: -3em;
+      transform: translateY(-50%);
+      background-color: silver;
+      height: 1px;
+      width: 3em;
+    }
+  }
+  .flow-subtitle{
+    color: #e9e9e9;
+    margin-bottom: 40px;
+    margin-top:20px;
+    text-align: center;
+  }
+}
+
+/deep/.el-tabs__item{
+  min-width: 148px;
+  text-align: center;
+}
+/deep/.el-tabs__item{
+  font-size: 16px;
 }
 </style>

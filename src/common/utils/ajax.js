@@ -4,12 +4,22 @@ import MockConfig from '../../mock/index'
 import rootVue from '@/main.js'
 // import { path } from 'chromedriver'
 // import { Message } from 'element-ui'
-
+let protocol = window.location.protocol // 协议
+let host = window.location.host // 主机
+let reg = /^localhost+/
+if (reg.test(host)) {
+  // 若本地项目调试使用
+  axios.defaults.baseURL = 'http://175.24.11.167:8082'
+} else {
+  // 动态请求地址/协议/主机
+  axios.defaults.baseURL = protocol + '//' + host + ':8082'
+}
 axios.defaults.withCredentials = true
-axios.defaults.baseURL = ''
+// axios.defaults.baseURL = 'http://175.24.11.167:8082/'
 axios.defaults.timeout = 60000
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8'
 
+console.log('MockConfig', MockConfig)
 // 发送请求拦截器
 axios.interceptors.request.use(
   config => {
@@ -34,6 +44,8 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   res => {
     switch (res.data.responseCode) {
+      case 200:
+        break
       case '10005':
         Message({
           showClose: true,
@@ -58,7 +70,7 @@ axios.interceptors.response.use(
     }
   },
   error => {
-    debugger
+    console.log('error==拦截器', error)
     Message({
       showClose: true,
       message: '请求超时',
@@ -70,6 +82,7 @@ axios.interceptors.response.use(
 
 export default{
   requestAPI (path, data = {}, type = 'post', options = {}) {
+    console.log('requestAPI-type', type)
     return axios.request({
       method: type,
       url: path,

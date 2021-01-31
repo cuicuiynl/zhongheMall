@@ -1,6 +1,6 @@
 <template>
   <!-- <img src=""></img> -->
-  <span class="company-icon" >中禾知识产权</span>
+  <span class="company-icon zh-theme" >中禾知识产权</span>
 </template>
 
 <script>
@@ -15,7 +15,6 @@ export default {
     height: 70px;
     background: #fff;
     font-size: 22px;
-    color: #199fff;
     line-height: 70px;
     letter-spacing: 2px;
     cursor: pointer;
