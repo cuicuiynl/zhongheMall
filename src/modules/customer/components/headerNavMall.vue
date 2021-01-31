@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mb20">
     <header-nav
       :tabs="tabs"
     >

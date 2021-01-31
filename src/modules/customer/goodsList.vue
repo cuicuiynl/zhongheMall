@@ -17,7 +17,8 @@ import patentListCard from './components/patentListCard'
 import emptyPage from '@/components/emptyPage'
 import pageModal from './components/pageModal'
 
-const getProductListUrl = 'nine/product/getProductList'
+// const getProductListUrl = 'nine/product/getProductList'
+const getProductListUrl = 'http://175.24.11.167:8082/nine/product/getProductList'
 export default {
   name: 'goodsList',
   components: {
@@ -36,7 +37,8 @@ export default {
   methods: {
     getProductList () {
       let params = {
-
+        pageNum: 20,
+        pageSize: 1
       }
       this.$ajax(getProductListUrl, params).then(res => {
         console.log('getTechnicalField-res', res)

@@ -15,6 +15,7 @@ Vue.use(VueRouter)
 Vue.use(Vuex)
 Vue.config.productionTip = false
 
+console.log('routes', routes)
 const Router = new VueRouter({
   routes: routes
 })

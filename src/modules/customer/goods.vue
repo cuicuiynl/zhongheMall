@@ -81,12 +81,12 @@ export default {
       }
     },
     // 查看更多
-    getMore (val) {
+    getMore (val = {}) {
       this.$store.commit('updateActivedTab', this.$route.name)
       this.$router.push({
-        name: 'patentDetails',
+        name: 'goodsList',
         params: {
-          id: this.patent.id || ''
+          id: val.id || ''
         }
       })
     }

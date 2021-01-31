@@ -9,7 +9,7 @@ let host = window.location.host // 主机
 let reg = /^localhost+/
 if (reg.test(host)) {
   // 若本地项目调试使用
-  axios.defaults.baseURL = 'http://175.24.11.167:8082'
+  // axios.defaults.baseURL = 'http://175.24.11.167:8082'
 } else {
   // 动态请求地址/协议/主机
   axios.defaults.baseURL = protocol + '//' + host + ':8082'
@@ -19,11 +19,13 @@ axios.defaults.withCredentials = true
 axios.defaults.timeout = 60000
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8'
 
-console.log('MockConfig', MockConfig)
 // 发送请求拦截器
 axios.interceptors.request.use(
   config => {
+    console.log('MockConfig', MockConfig)
+    console.log('config.url', config.url)
     if (MockConfig[config.url]) {
+      axios.defaults.baseURL = ''
       config.url = MockConfig[config.url]
       config.method = 'GET'
       return config
@@ -82,7 +84,7 @@ axios.interceptors.response.use(
 
 export default{
   requestAPI (path, data = {}, type = 'post', options = {}) {
-    console.log('requestAPI-type', type)
+    console.log('requestAPI-type', path, type)
     return axios.request({
       method: type,
       url: path,
