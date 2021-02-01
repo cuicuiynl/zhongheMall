@@ -45,10 +45,10 @@ module.exports = {
         test: /\\\\\\\\.css$/,
         loader: "style!css"
       },
-      {
-          test: /\\\\\\\\.(eot|woff|woff2|ttf)([\\\\\\\\?]?.*)$/,
-          loader: "file"
-      },
+      // {
+      //     test: /\\\\\\\\.(eot|woff|woff2|ttf)([\\\\\\\\?]?.*)$/,
+      //     loader: "file"
+      // },
       {
           test: /\.less$/,    
           loader: "style-loader!css-loader!less-loader"
@@ -82,15 +82,15 @@ module.exports = {
           limit: 10000,
           name: utils.assetsPath('media/[name].[hash:7].[ext]')
         }
-      },
-      {
-        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-        loader: 'url-loader',
-        options: {
-          limit: 10000,
-          name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
-        }
       }
+      // {
+      //   test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+      //   loader: 'url-loader',
+      //   options: {
+      //     limit: 10000,
+      //     name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
+      //   }
+      // }
     ]
   },
   node: {

@@ -14,7 +14,7 @@ if (reg.test(host)) {
   // 动态请求地址/协议/主机
   axios.defaults.baseURL = protocol + '//' + host + ':8082'
 }
-axios.defaults.withCredentials = true
+axios.defaults.withCredentials = false
 // axios.defaults.baseURL = 'http://175.24.11.167:8088/'
 axios.defaults.timeout = 60000
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8'
