@@ -150,6 +150,7 @@ export default {
     &.hide{
       opacity: 0;
       height: 0;
+      min-height: 0;
       padding: 0 15px;
     }
   }
