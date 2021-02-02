@@ -12,7 +12,7 @@ if (reg.test(host)) {
   axios.defaults.baseURL = 'http://175.24.11.167:8088'
 } else {
   // 动态请求地址/协议/主机
-  axios.defaults.baseURL = protocol + '//' + host + ':8080'
+  axios.defaults.baseURL = protocol + '//' + host + ':8085'
 }
 axios.defaults.withCredentials = false
 // axios.defaults.baseURL = 'http://175.24.11.167:8088/'
@@ -59,7 +59,7 @@ axios.interceptors.response.use(
         console.log('lanjieqi---morenzhi===', res.data.statusCode)
         Message({
           showClose: true,
-          message: res.objectData
+          message: res.objectData.errMsg
         })
     }
     // return Promise.resolve(res.data)

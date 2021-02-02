@@ -30,7 +30,7 @@
 
 <script>
 import techData from '../../../../static/mock/technicalField.json'
-const technicalField = '/technicalField.do'
+// const technicalField = '/technicalField.do'
 
 export default {
   name: 'searchPannel',
@@ -40,9 +40,9 @@ export default {
       selectedList: [],
       selectedMap: {
         patentType: {value: 0},
-        technicalField: {value: 0},
-        legalStatus: {value: 0},
-        author: {value: 0}
+        tag: {value: 0},
+        lawStatus: {value: 0},
+        inventor: {value: 0}
       },
       pannelList: [
         {
@@ -56,12 +56,12 @@ export default {
           ]
         },
         {
-          key: 'technicalField',
+          key: 'tag',
           title: '技术领域',
           list: []
         },
         {
-          key: 'legalStatus',
+          key: 'lawStatus',
           title: '法律状态',
           list: [
             {value: 0, label: '不限'},
@@ -70,7 +70,7 @@ export default {
           ]
         },
         {
-          key: 'author',
+          key: 'inventor',
           title: '发明人',
           list: [
             {value: 0, label: '不限'},
@@ -100,6 +100,7 @@ export default {
       console.log('selectItem-val, key', val, key)
       this.$set(this.selectedMap, key, val)
       let selectList = []
+      let searchMap = {}
       for (let key in this.selectedMap) {
         let val = this.selectedMap[key].value
         if (val !== 0) {
@@ -108,29 +109,30 @@ export default {
             label: this.selectedMap[key].label
           })
         }
+        searchMap[key] = this.selectedMap[key].value
       }
       this.selectedList = selectList
-      this.$emit('search', this.selectedMap)
+      this.$emit('searchPannel', searchMap)
     },
     delSelected (index, type) {
       this.selectedList.splice(index, 1)
-    },
-    // 暂时不用
-    getTechnicalField () {
-      this.$ajax(technicalField).then(res => {
-        console.log('getTechnicalField-res', res)
-        if (res.statusCode === 200 && res.objectData) {
-          let data = res.objectData || []
-          let newData = data.map((item) => {
-            return {
-              value: item.tag,
-              label: item.tag
-            }
-          })
-          this.$set(this.pannelList[1], 'list', [{label: '不限', value: 0}, ...newData])
-        }
-      })
     }
+    // 暂时不用
+    // getTechnicalField () {
+    //   this.$ajax(technicalField).then(res => {
+    //     console.log('getTechnicalField-res', res)
+    //     if (res.statusCode === 200 && res.objectData) {
+    //       let data = res.objectData || []
+    //       let newData = data.map((item) => {
+    //         return {
+    //           value: item.tag,
+    //           label: item.tag
+    //         }
+    //       })
+    //       this.$set(this.pannelList[1], 'list', [{label: '不限', value: 0}, ...newData])
+    //     }
+    //   })
+    // }
   }
 }
 </script>

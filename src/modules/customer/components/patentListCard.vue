@@ -22,8 +22,8 @@
         <div class="flex-v-center">
           零售价：<span class="price">￥{{patent.pnoneVipPrice}}</span>
           <img src="/static/imgs/vipLog.png" class="ml5"> <span class="red ml5">￥<span class="vip-price">{{patent.pvipPrice}}</span></span>
-          <el-button type="danger" size="small" class="ml20">立即购买</el-button>
-          <el-button size="small" class="ml10">预留</el-button>
+          <el-button type="danger" size="small" class="ml20" @click="tip">立即购买</el-button>
+          <el-button size="small" class="ml10" @click="tip">预留</el-button>
         </div>
       </div>
     </div>
@@ -42,6 +42,12 @@ export default {
     }
   },
   methods: {
+    tip () {
+      this.$alert('请联系高先生：13342903057 进行后续购买流程', '提示', {
+        confirmButtonText: '确定',
+        callback: action => {}
+      })
+    },
     checkDetail () {
       this.$store.commit('updateActivedTab', this.$route.name)
       this.$router.push({

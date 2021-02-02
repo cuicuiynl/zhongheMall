@@ -1,8 +1,16 @@
 <template>
   <pageModal>
       <div slot="pageContent">
-        <searchPannel></searchPannel>
+        <searchPannel @searchPannel="searchPannel"></searchPannel>
       <div class="good-items">
+        <div class="list-top">
+          <el-input
+            style="width:300px;"
+            placeholder="请输入专利号/名称"
+            v-model="keyword">
+            <i slot="suffix" @click="serachKeyword" class="el-input__icon el-icon-search pointer"></i>
+          </el-input>
+        </div>
         <template v-for="item in productList" >
           <patentListCard :patent="item" :key="item.pid"></patentListCard>
         </template>
@@ -40,10 +48,14 @@ export default {
   },
   data () {
     return {
+      keyword: '', // 搜索关键字
       pageInfo: {
         total: 0,
         pageSize: 10,
         pageNum: 1
+      },
+      searchCondition: {
+        keyword: null
       },
       productList: [] // 商品列表
     }
@@ -52,10 +64,20 @@ export default {
     this.getProductList()
   },
   methods: {
+    searchPannel (obj) {
+      Object.assign(this.searchCondition, obj)
+      this.getProductList()
+    },
+    serachKeyword () {
+      console.log('keyword', this.keyword)
+      this.searchCondition.keyword = this.keyword
+      this.getProductList()
+    },
     getProductList () {
       let params = {
         pageNum: this.pageInfo.pageNum,
-        pageSize: this.pageInfo.pageSize
+        pageSize: this.pageInfo.pageSize,
+        ...this.searchCondition
       }
       this.$ajax(getProductListUrl, params).then(res => {
         if (res.statusCode === 200) {
@@ -84,5 +106,10 @@ export default {
   margin-top: 20px;
   margin-bottom: 20px;
   box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+  .list-top{
+    padding: 12px 20px;
+    border-bottom: 1px solid #ddd;
+    text-align: right;
+  }
 }
 </style>
