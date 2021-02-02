@@ -71,7 +71,7 @@ export default {
         },
         {
           key: 'author',
-          title: '专利类型',
+          title: '发明人',
           list: [
             {value: 0, label: '不限'},
             {value: 1, label: '提供'},
@@ -110,7 +110,7 @@ export default {
         }
       }
       this.selectedList = selectList
-      this.$commit('search', this.selectedMap)
+      this.$emit('search', this.selectedMap)
     },
     delSelected (index, type) {
       this.selectedList.splice(index, 1)
@@ -119,8 +119,8 @@ export default {
     getTechnicalField () {
       this.$ajax(technicalField).then(res => {
         console.log('getTechnicalField-res', res)
-        if (res.responseCode === 200 && res.data) {
-          let data = res.data || []
+        if (res.statusCode === 200 && res.objectData) {
+          let data = res.objectData || []
           let newData = data.map((item) => {
             return {
               value: item.tag,
@@ -161,6 +161,7 @@ export default {
     display: inline-block;
     color: #999;
     margin-right: 20px;
+    width: 80px;
     flex-shrink: 0;
   }
   .filter-item{

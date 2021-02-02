@@ -2,20 +2,26 @@
   <div class="patent-card">
     <img :src="`/static/imgs/C-A.png`" class="image" @click="checkDetail">
     <div class="partent-info-wrap">
-      <p class="partent-name zh-a-theme" @click="checkDetail">一种可自动除臭的运动背包</p>
-      <span class="partent-info">专利号：12333</span>
-      <span class="partent-info">领域：12333</span>
-      <span class="partent-info">发明人：12333</span>
-      <span class="partent-info">专利号：12333</span>
-      <span class="partent-info">专利类型：12333</span>
+      <!-- <p class="partent-name zh-a-theme" @click="checkDetail">{{patent.patentName}}</p>
+      <span class="partent-info">专利号：{{patent.patentNo}}</span>
+      <span class="partent-info">领域：{{patent.tag}}</span>
+      <span class="partent-info">发明人：{{patent.inventor}}</span>
+      <span class="partent-info">专利类型：{{patent.patentNo}}</span>
+      <span class="partent-info">法律状态：{{patent.lawStatus}}</span> -->
+      <p class="partent-name zh-a-theme" @click="checkDetail">{{patent.ppatentName}}</p>
+      <span class="partent-info">专利号：{{patent.ppatentNo}}</span>
+      <span class="partent-info">领域：{{patent.ptag}}</span>
+      <span class="partent-info">发明人：{{patent.pinventor}}</span>
+      <span class="partent-info">专利类型：发明专利</span>
+      <span class="partent-info">法律状态：{{patent.plawStatus}}</span>
       <div class="flex-between-center">
         <div>
           <span class="status-tip">未下证</span>
           <span class="status-tip">预售</span>
         </div>
         <div class="flex-v-center">
-          零售价：<span class="price">￥20000</span>
-          <img src="/static/imgs/vipLog.png" class="ml5"> <span class="red ml5">￥<span class="vip-price">15000</span></span>
+          零售价：<span class="price">￥{{patent.pnoneVipPrice}}</span>
+          <img src="/static/imgs/vipLog.png" class="ml5"> <span class="red ml5">￥<span class="vip-price">{{patent.pvipPrice}}</span></span>
           <el-button type="danger" size="small" class="ml20">立即购买</el-button>
           <el-button size="small" class="ml10">预留</el-button>
         </div>

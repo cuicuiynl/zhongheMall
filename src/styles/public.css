@@ -35,7 +35,10 @@
   border: 1px solid #14a8bd;
 }
 .zh-theme-bg {
-  color: #daf6fa;
+  background: #daf6fa;
+}
+.zh-theme-bg2 {
+  background: #14a8bd;
 }
 .actived {
   color: #14a8bd;

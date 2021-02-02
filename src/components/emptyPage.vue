@@ -15,7 +15,7 @@ export default {
     },
     emptyText: {
       type: String,
-      default: '暂无搜索结果'
+      default: '暂无结果'
     }
   }
 }

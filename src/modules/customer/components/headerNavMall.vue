@@ -21,7 +21,7 @@
             <template v-else>
             <div class="login-btn">
                 <span class="log" @click="login('log')">登录</span>
-                <span class="reg" @click="login('reg')">免费注册</span>
+                <span class="reg zh-theme-bg2" @click="login('reg')">免费注册</span>
             </div>
         </template>
       </template>
@@ -105,7 +105,7 @@ export default {
     height: 40px;
     color: #fff;
     text-align: center;
-    background: #199fff;
+    // background: #199fff;
     border-radius: 23px;
     margin-left: 15px;
     cursor: pointer;
@@ -131,7 +131,7 @@ export default {
     top: 0;
     right: 50%;
     width: 148px;
-    z-index: 9999;
+    z-index: 999;
     transform: translate(50%);
 }
 .info-wrap{

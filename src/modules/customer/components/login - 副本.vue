@@ -4,42 +4,49 @@
       <span class="close-btn" @click="close"></span>
       <div class="phone-box">
         <p class="title">手机号登录</p>
-        <el-form :model="ruleForm" :rules="rules" ref="ruleForm"  label-position="top">
-          <el-form-item label="手机号" prop="phoneNumber">
-            <el-input
-              :maxlength="11"
-              placeholder="请输入手机号"
-              class="mb15 mt30"
-              clearable
-              v-model="ruleForm.phoneNumber">
-            </el-input>
-          </el-form-item>
-          <el-form-item label="密码" prop="password">
-              <el-input
-                :maxlength="12"
-                placeholder="请输入密码"
-                class="mb15 mt30"
-                clearable
-                v-model="ruleForm.password">
-              </el-input>
-            </el-form-item>
-           <template v-if="loginType=='reg'">
-            <el-form-item label="推荐人手机号" prop="recommendNum">
-              <el-input
-                :maxlength="11"
-                placeholder="请输入推荐人手机号（选填）"
-                class="mb15 mt30"
-                clearable
-                v-model="ruleForm.recommendNum">
-              </el-input>
-            </el-form-item>
-          </template>
-        </el-form>
+        <p class="txt-phone">手机号</p>
+        <el-input
+          :maxlength="11"
+          placeholder="请输入手机号"
+          class="mb15 mt30"
+          clearable
+          v-model="phoneNumber">
+        </el-input>
+        <template v-if="loginType=='reg'">
+          <!-- <p class="item-label">验证码</p>
+          <el-input
+            placeholder="验证码"
+            class="mb15 mt30"
+            v-model="testNumber">
+          </el-input> -->
+          <p class="item-label">密码</p>
+          <el-input
+            class="mb15 mt30"
+            placeholder="请输入密码"
+            type="password"
+            v-model="password">
+          </el-input>
+          <p class="item-label">推荐人手机号</p>
+          <el-input
+            class="mb15 mt30"
+            placeholder="请输入推荐人手机号（选填）"
+            type="password"
+            v-model="password2">
+          </el-input>
+        </template>
+        <template v-if="loginType=='log'">
+          <p class="item-label">密码</p>
+          <el-input
+            class="mb15 mt30"
+            type="password"
+            v-model="password">
+          </el-input>
+        </template>
         <span class="login-btn zh-theme-bg2" @click="loginOrReg" >{{loginType=='log' ? '登录' : '注册'}}</span>
       </div>
       <div class="others-login-wrapper">
-        <span v-if="loginType=='reg'" @click="changeLogType('log')"><span class="astyle">账号密码登录</span></span>
-        <span v-if="loginType=='log'" >没有账号，点击<span class="astyle" @click="changeLogType('reg')">注册</span></span>
+        <span v-if="loginType=='reg'" @click="loginType = 'log'; password = ''"><span class="astyle">账号密码登录</span></span>
+        <span v-if="loginType=='log'" >没有账号，点击<span class="astyle" @click="loginType = 'reg'; password = ''">注册</span></span>
       </div>
     </div>
   </div>
@@ -58,54 +65,23 @@ export default {
   },
   data () {
     return {
-      ruleForm: {
-        recommendNum: '', // 再次输入的密码
-        phoneNumber: '', // 手机号
-        testNumber: '', // 验证码
-        password: '' // 密码
-      },
       loginType: 'log',
-      rules: {
-        phoneNumber: [
-          { required: true, message: '请输入手机号', trigger: 'blur' },
-          { pattern: /^1[345789]\d{9}$/, message: '目前只支持中国大陆的手机号码', trigger: 'blur' }
-          // { min: 3, max: 11, message: '长度在11位', trigger: 'blur' }
-        ],
-        password: [
-          { required: true, message: '请输入密码', trigger: 'blur' },
-          { min: 6, max: 12, message: '请输入6-12位密码', trigger: 'blur' }
-        ],
-        recommendNum: [
-          { pattern: /^1[345789]\d{9}$/, message: '目前只支持中国大陆的手机号码', trigger: 'blur' }
-        ]
-      }
+      password2: '', // 再次输入的密码
+      phoneNumber: '', // 手机号
+      testNumber: '', // 验证码
+      password: '' // 密码
     }
   },
   mounted () {
     this.loginType = this.logType
   },
   methods: {
-    changeLogType (val) {
-      this.resetForm()
-      this.password = ''
-      this.loginType = val
-    },
     loginOrReg () {
-      this.$refs['ruleForm'].validate((valid) => {
-        if (valid) {
-          if (this.loginType === 'log') {
-            this.login()
-          } else if (this.loginType === 'reg') {
-            this.register()
-          }
-        } else {
-          console.log('error submit!!')
-          return false
-        }
-      })
-    },
-    resetForm () {
-      this.$refs['ruleForm'].resetFields()
+      if (this.loginType === 'log') {
+        this.login()
+      } else if (this.loginType === 'reg') {
+        this.register()
+      }
     },
     login () {
       let params = {
@@ -130,7 +106,7 @@ export default {
     register () {
       let params = {
         mobile: this.phoneNumber,
-        recommendNum: this.recommendNum,
+        recommend: this.recommend,
         password: this.password
       }
       this.$ajax(registerUrl, params).then(res => {
@@ -181,7 +157,6 @@ export default {
       font-weight: 500;
       color: #000;
       margin-top: 30px;
-      margin-bottom: 10px;
     }
     .txt-phone{
       margin-top: 30px;
@@ -198,7 +173,7 @@ export default {
       display: inline-block;
       width: 310px;
       height: 42px;
-      margin-top: 10px;
+      margin-top: 30px;
       border-radius: 10px;
       color: #fff;
       text-align: center;
@@ -221,7 +196,7 @@ export default {
   position: relative;
   width: 310px;
   margin: 0 auto;
-  padding-bottom: 60px;
+  padding-bottom: 110px;
 }
 .others-login-wrapper{
   position: absolute;
@@ -234,8 +209,5 @@ export default {
   flex-wrap: wrap;
   font-size: 12px;
   color: #666;
-}
-/deep/.el-form--label-top .el-form-item__label{
-  padding: 0;
 }
 </style>

@@ -9,10 +9,10 @@ let host = window.location.host // 主机
 let reg = /^localhost+/
 if (reg.test(host)) {
   // 若本地项目调试使用
-  // axios.defaults.baseURL = 'http://175.24.11.167:8088'
+  axios.defaults.baseURL = 'http://175.24.11.167:8088'
 } else {
   // 动态请求地址/协议/主机
-  axios.defaults.baseURL = protocol + '//' + host + ':8082'
+  axios.defaults.baseURL = protocol + '//' + host + ':8080'
 }
 axios.defaults.withCredentials = false
 // axios.defaults.baseURL = 'http://175.24.11.167:8088/'
@@ -45,10 +45,10 @@ axios.interceptors.request.use(
 // 数据返回拦截器
 axios.interceptors.response.use(
   res => {
-    switch (res.data.responseCode) {
+    switch (res.data.statusCode) {
       case 200:
         break
-      case '10005':
+      case 409:
         Message({
           showClose: true,
           message: '您当前登陆超时或异常，请重新登陆'
@@ -56,15 +56,16 @@ axios.interceptors.response.use(
         rootVue.$store.commit('userInfo', { loginFlag: false })
         break
       default:
+        console.log('lanjieqi---morenzhi===', res.data.statusCode)
         Message({
           showClose: true,
-          message: res.data.responseMessage
+          message: res.objectData
         })
     }
     // return Promise.resolve(res.data)
-    if (res.data && res.data.responseCode) {
-      if (res.data && !res.data.data) {
-        res.data.data = ''
+    if (res.data && res.data.statusCode) {
+      if (res.data && !res.data.objectData) {
+        res.data.objectData = ''
       }
       return res.data
     } else {

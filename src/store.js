@@ -4,7 +4,7 @@ const URL_LOGOUT = '/logout.do'
 const state = {
   // 登陆人信息
   userInfo: {
-    loginFlag: true
+    loginFlag: false
   },
   activedTab: 'goods'
 }
@@ -27,7 +27,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       Vue.prototype.$ajax(URL_LOGOUT).then((res) => {
         console.log('res===', res)
-        if (res.responseCode === '10001') {
+        if (res.statusCode === 200) {
           window.localStorage.removeItem('userInfo')
           context.commit('updateUserInfo', { loginFlag: false })
         } else {
