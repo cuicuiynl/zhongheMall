@@ -5,7 +5,7 @@
     >
       <template slot="right" >
         <template v-if="userInfo.loginFlag">
-            <div class="my-order" @click="go('myOrder')">我的订单</div>
+            <div class="my-order zh-a-theme" @click="go('myOrder')">我的订单</div>
             <span class="split-line"></span>
             <div class="head-pic">
               <i class="el-icon-user-solid" style="margin-top:12px;"></i>
