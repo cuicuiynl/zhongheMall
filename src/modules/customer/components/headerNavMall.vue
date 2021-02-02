@@ -5,13 +5,16 @@
     >
       <template slot="right" >
         <template v-if="userInfo.loginFlag">
-            <div class="my-order">我的订单</div>
+            <div class="my-order" @click="go('myOrder')">我的订单</div>
             <span class="split-line"></span>
             <div class="head-pic">
+              <i class="el-icon-user-solid" style="margin-top:12px;"></i>
                 <div class="info-wrap-out">
                   <div class="info-wrap">
-                    <div class="head-item" v-for="item in userSelectors" :key="item.value">
-                       <span class="head-item-icon" :class="`${item.value}-icon`"></span> {{item.label}}
+                    <div class="head-item" v-for="item in userSelectors" :key="item.value" @click="go(item.value)">
+                       <span class="head-item-icon zh-theme" >
+                         <i :class="item.icon"></i>
+                       </span> <span class="lable-style">{{item.label}}</span>
                     </div>
                     <div class="logout-btn" @click="logout">安全退出</div>
                   </div>
@@ -49,9 +52,10 @@ export default {
         {value: 'goodsList', label: '专利市场'}
       ],
       userSelectors: [
-        {value: 'orders', label: '我的订单'},
-        {value: 'collects', label: '我的收藏'},
-        {value: 'accountManage', label: '账户管理'}
+        {value: 'account', label: '账户管理', icon: 'el-icon-user'},
+        {value: 'myOrder', label: '我的订单', icon: 'el-icon-tickets'},
+        {value: 'shoppingCard', label: '购物车', icon: 'el-icon-shopping-cart-2'},
+        {value: 'collects', label: '我的收藏', icon: 'el-icon-star-off'}
       ],
       showLogin: false,
       logType: ''
@@ -65,6 +69,10 @@ export default {
     })
   },
   methods: {
+    // 我的订单
+    go (val) {
+      this.$router.push({name: val})
+    },
     // 打开登陆窗口
     login (val) {
       this.showLogin = true
@@ -116,6 +124,9 @@ export default {
     float: right;
     width: 46px;
     height: 46px;
+    font-size: 20px;
+    text-align: center;
+    line-height: 16px;
     border-radius: 23px;
     background: #eee;
     &:hover{
@@ -128,6 +139,7 @@ export default {
     display: none;
     cursor: pointer;
     position: absolute;
+    font-size: 14px;
     top: 0;
     right: 50%;
     width: 148px;
@@ -141,9 +153,13 @@ export default {
     padding-top: 8px;
     padding-bottom: 5px;
     box-shadow: 0 0 35px 0 rgba(0, 0, 0, .04);
+    .lable-style{
+      display: inline-block;
+      width: 80px;
+    }
 }
 .head-item{
-    padding: 0 20px;
+    padding: 10px;
     transition: .4s;
     &:hover{
         background: #f0f9f9;
@@ -151,17 +167,17 @@ export default {
 }
 .head-item-icon{
     display: inline-block;
-    background: #ddd;
     width: 14px;
     height: 14px;
+    font-size: 15px;
     margin-right: 12px;
     position: relative;
     top: 2px;
 }
 .logout-btn{
    border-top:1px solid #ddd;
-   padding-top: 5px;
-   margin: 0 20px;
+   margin-top: 5px;
+   padding: 10px 20px;
    text-align: center;
 }
 </style>

@@ -1,13 +1,17 @@
 <template>
-  <div> 我的收藏</div>
+  <div>
+    <productCard ></productCard>
+  </div>
 </template>
 
 <script>
+import productCard from '../components/productCard.vue'
 export default {
-
+  components: {
+    productCard
+  }
 }
 </script>
 
-<style>
-
+<style lang="less" scoped>
 </style>

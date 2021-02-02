@@ -12,7 +12,7 @@
       <span class="partent-info">专利号：{{patent.ppatentNo}}</span>
       <span class="partent-info">领域：{{patent.ptag}}</span>
       <span class="partent-info">发明人：{{patent.pinventor}}</span>
-      <span class="partent-info">专利类型：发明专利</span>
+      <span class="partent-info">专利类型：发明专利{{patent.patentType}}</span>
       <span class="partent-info">法律状态：{{patent.plawStatus}}</span>
       <div class="flex-between-center">
         <div>

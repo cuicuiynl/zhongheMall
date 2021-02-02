@@ -28,6 +28,7 @@ export default {
       tabs: [
         {value: 'account', label: '用户中心'},
         {value: 'myOrder', label: '我的订单'},
+        {value: 'shoppingCard', label: '购物车'},
         {value: 'collects', label: '我的收藏'}
       ]
     }

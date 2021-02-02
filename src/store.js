@@ -4,7 +4,7 @@ const URL_LOGOUT = '/logout.do'
 const state = {
   // 登陆人信息
   userInfo: {
-    loginFlag: false
+    loginFlag: true
   },
   activedTab: 'goods'
 }
