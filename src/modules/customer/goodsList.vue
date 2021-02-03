@@ -7,7 +7,8 @@
           <el-input
             style="width:300px;"
             placeholder="请输入专利号/名称"
-            v-model="keyword">
+            @on-enter="serachKeyword"
+            v-model.trim="keyword">
             <i slot="suffix" @click="serachKeyword" class="el-input__icon el-icon-search pointer"></i>
           </el-input>
         </div>
@@ -55,7 +56,7 @@ export default {
         pageNum: 1
       },
       searchCondition: {
-        keyword: null
+        keyword: ''
       },
       productList: [] // 商品列表
     }
@@ -74,15 +75,17 @@ export default {
       this.getProductList()
     },
     getProductList () {
+      console.log('pageInfo', this.pageInfo)
       let params = {
         pageNum: this.pageInfo.pageNum,
         pageSize: this.pageInfo.pageSize,
         ...this.searchCondition
       }
+      console.log('getProductList--params', params)
       this.$ajax(getProductListUrl, params).then(res => {
         if (res.statusCode === 200) {
           let objectData = res.objectData || {}
-          this.pageInfo = objectData.totalNum
+          this.pageInfo.total = objectData.totalNum
           if (objectData.productEntityList && objectData.productEntityList.length) {
             this.productList = objectData.productEntityList
           }
