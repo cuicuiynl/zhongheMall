@@ -42,8 +42,8 @@ export default {
     padding: 60px 0;
     .content{
       padding: 0 5%;
-      width: 1190px;
       margin:0 auto;
+      max-width: 1190px;
     }
 }
 .footerItem-title{

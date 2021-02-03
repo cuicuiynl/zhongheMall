@@ -42,7 +42,7 @@
         <p class="flow-subtitle">优质专利 流程便捷</p>
         <img src="/static/imgs/flow.png" class="flow-img">
       </div>
-      <img src="/static/imgs/adv.png">
+      <img src="/static/imgs/adv.png" class="w100p">
     </div>
   </pageModal>
 </template>
@@ -96,7 +96,7 @@ export default {
 
 <style lang="less" scoped>
 .banner {
-  width: 1190px;
+  max-width: 1190px;
   margin-top:20px;
   margin-bottom: 20px;
   // margin: 20px auto 0;

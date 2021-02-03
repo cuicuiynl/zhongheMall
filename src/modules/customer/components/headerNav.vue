@@ -53,7 +53,7 @@ export default {
 
 <style lang="less" scoped>
 .nav-wrap{
-    width: 1190px;
+    max-width: 1190px;
     height: 80px;
     margin: 0 auto;
     display: flex;
