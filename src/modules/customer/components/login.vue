@@ -135,7 +135,8 @@ export default {
       }
       this.$ajax(registerUrl, params).then(res => {
         if (res.statusCode === 200) {
-          this.loginType = 'reg'
+          this.loginType = 'log'
+          this.resetForm()
         } else {
           this.$message({
             message: '注册失败',

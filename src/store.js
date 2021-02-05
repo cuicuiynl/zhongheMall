@@ -4,7 +4,7 @@ const URL_LOGOUT = '/nine/user/logout'
 const state = {
   // 登陆人信息
   userInfo: {
-    loginFlag: true
+    loginFlag: false
   },
 
   activedTab: 'goods'
