@@ -109,8 +109,8 @@ export default {
     },
     login () {
       let params = {
-        mobile: this.phoneNumber,
-        password: this.password
+        mobile: this.ruleForm.phoneNumber,
+        password: this.ruleForm.password
       }
       this.$ajax(loginUrl, params).then(res => {
         if (res.statusCode === 200) {
@@ -129,9 +129,9 @@ export default {
     },
     register () {
       let params = {
-        mobile: this.phoneNumber,
-        recommendNum: this.recommendNum,
-        password: this.password
+        mobile: this.ruleForm.phoneNumber,
+        recommendNum: this.ruleForm.recommendNum,
+        password: this.ruleForm.password
       }
       this.$ajax(registerUrl, params).then(res => {
         if (res.statusCode === 200) {
