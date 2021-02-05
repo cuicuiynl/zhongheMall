@@ -46,8 +46,8 @@
 </template>
 
 <script>
-const loginUrl = '/nine/user/register/login'
-const registerUrl = '/nine/user/register/register'
+const loginUrl = '/nine/user/login'
+const registerUrl = '/nine/user/register'
 export default {
   name: 'login',
   props: {

@@ -1,11 +1,12 @@
 import Vue from 'vue'
-const URL_LOGOUT = '/logout.do'
+const URL_LOGOUT = '/nine/user/logout'
 
 const state = {
   // 登陆人信息
   userInfo: {
     loginFlag: true
   },
+
   activedTab: 'goods'
 }
 const mutations = {
