@@ -59,7 +59,7 @@ axios.interceptors.response.use(
         console.log('lanjieqi---morenzhi===', res.data.statusCode)
         Message({
           showClose: true,
-          message: res.objectData.errMsg
+          message: res.objectData
         })
     }
     // return Promise.resolve(res.data)
