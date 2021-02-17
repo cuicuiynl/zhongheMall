@@ -3,14 +3,15 @@
     <div class="flex-between content">
       <div v-for="(value, key) in list" :key="key">
         <p class="footerItem-title">{{key}}</p>
-        <div v-for="(item,index) in value"
+        <!-- :class="{'zh-a-theme': index > 0}" -->
+        <div v-for="(item) in value"
         :key="item"
         class="footerItem-content"
-        :class="{'zh-a-theme': index > 0}">{{item}}</div>
+        >{{item}}</div>
       </div>
       <div>
         <p class="footerItem-title">微信公众号</p>
-        <img src="/static/imgs/wechat.png" width="150">
+        <img src="/static/imgs/wechat.jpg" width="150">
       </div>
     </div>
   </div>

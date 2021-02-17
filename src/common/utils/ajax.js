@@ -7,8 +7,7 @@ import rootVue from '@/main.js'
 let protocol = window.location.protocol // 协议
 let host = window.location.host // 主机
 let reg = /^localhost+/
-let userInfo = localStorage.zhongheUser ? JSON.parse(localStorage.zhongheUser) : ''
-let token = userInfo.token || ''
+
 if (reg.test(host)) {
   // 若本地项目调试使用
   axios.defaults.baseURL = 'http://175.24.11.167:8088'
@@ -17,7 +16,6 @@ if (reg.test(host)) {
   axios.defaults.baseURL = protocol + '//' + host + ':8085'
 }
 
-axios.defaults.headers.common['Authentication'] = token
 axios.defaults.withCredentials = false
 // axios.defaults.baseURL = 'http://175.24.11.167:8088/'
 axios.defaults.timeout = 60000
@@ -34,7 +32,10 @@ axios.interceptors.request.use(
       config.method = 'GET'
       return config
     }
+    let userInfo = localStorage.zhongheUser ? JSON.parse(localStorage.zhongheUser) : ''
+    let token = userInfo.token || ''
     config.headers.SESSION = ''
+    config.headers.common['Authentication'] = token
     return config
   },
   error => {

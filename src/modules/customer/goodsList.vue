@@ -111,7 +111,6 @@ export default {
 .good-items{
   margin-top: 20px;
   margin-bottom: 20px;
-  padding-bottom: 20px;
   box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
   .list-top{
     padding: 12px 20px;
@@ -120,7 +119,7 @@ export default {
   }
 }
 /deep/.el-pagination{
-  margin-top: 20px;
+  padding: 20px;
   text-align: right;
 }
 </style>
