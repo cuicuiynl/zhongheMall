@@ -35,7 +35,8 @@ axios.interceptors.request.use(
     let userInfo = localStorage.zhongheUser ? JSON.parse(localStorage.zhongheUser) : ''
     let token = userInfo.token || ''
     config.headers.SESSION = ''
-    config.headers.common['Authentication'] = token
+    // config.headers.common['Authentication'] = token
+    config.headers.token = token
     return config
   },
   error => {
