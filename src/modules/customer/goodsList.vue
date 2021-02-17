@@ -62,6 +62,8 @@ export default {
     }
   },
   mounted () {
+    Object.assign(this.searchCondition, this.$route.query || {})
+    console.log('this.searchCondition', this.searchCondition)
     this.getProductList()
   },
   methods: {

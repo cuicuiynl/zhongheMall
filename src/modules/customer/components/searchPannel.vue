@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import techData from '../../../../static/mock/technicalField.json'
+// import techData from '../../../../static/mock/technicalField.json'
 const conditionsList = '/nine/product/conditionsList'
 
 export default {
@@ -40,7 +40,7 @@ export default {
       selectedList: [],
       selectedMap: {
         patentType: {value: '0'},
-        tag: {value: '0'},
+        // tag: {value: '0'},
         lawStatus: {value: '0'},
         inventor: {value: '0'}
       },
@@ -55,11 +55,11 @@ export default {
             {value: '3', label: '外观设计专利'}
           ]
         },
-        {
-          key: 'tag',
-          title: '技术领域',
-          list: []
-        },
+        // {
+        //   key: 'tag',
+        //   title: '技术领域',
+        //   list: []
+        // },
         {
           key: 'lawStatus',
           title: '法律状态',
@@ -83,18 +83,18 @@ export default {
     }
   },
   mounted () {
-    this.init()
+    // this.init()
     this.getConditionsList()
   },
   methods: {
     init () {
-      let newData = techData.data.map((item) => {
-        return {
-          value: item.tag,
-          label: item.tag
-        }
-      })
-      this.$set(this.pannelList[1], 'list', [{label: '不限', value: '0'}, ...newData])
+      // let newData = techData.data.map((item) => {
+      //   return {
+      //     value: item.tag,
+      //     label: item.tag
+      //   }
+      // })
+      // this.$set(this.pannelList[1], 'list', [{label: '不限', value: '0'}, ...newData])
     },
     // 获取搜索参数
     getSearchMap () {

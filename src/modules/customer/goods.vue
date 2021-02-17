@@ -5,14 +5,14 @@
         <p class="banner-text">全网最真实的一手交易平台</p>
         <div class="search-wrap">
           <el-input
-            style="width: 400px"
+            style="width: 100%"
             placeholder="请搜索专利号/名称"
-            suffix-icon="el-icon-search"
             size="large"
             clearable
             v-model="searchCondition">
+             <i slot="suffix" class="el-input__icon el-icon-search" @click="handleSearch(searchCondition)"></i>
           </el-input>
-          <el-button round class="ml10" @click="handleSearch(searchCondition)">搜索</el-button>
+          <!-- <el-button round class="ml10" @click="handleSearch(searchCondition)">搜索</el-button> -->
           <p class="mt10">
             <span @click="handleSearch(item)" class="keyword-item" v-for="item in keyWords" :key="item">{{item}}</span>
           </p>
@@ -20,20 +20,20 @@
       </div>
       <!-- 产品列表 -->
       <el-tabs :tab-position="tabPosition">
-        <el-tab-pane :label="item.name" v-for="item in goodlist" :key="item.category">
-          <div class="flex-between flex-wrap">
-            <template v-for="(item2, index2) in 12">
-              <el-card shadow="hover" :key="item2" v-if="index2 < 10" class="card-body" >
-                <img :src="`/static/imgs/some.jpg`" class="image" @click="goDetailPage(item2)">
-                <p class="title" @click="goDetailPage(item2)">一种用于皮包自动除尘涂油保养的装置</p>
-                <div class="flex-between" @click="goDetailPage(item2)">
-                  <span class="price1">￥20000</span>
-                  <span class="price2"><span class="icon">VIP</span><span class="num">￥15000</span></span>
+        <el-tab-pane :label="key" v-for="(value, key) in goodlist" :key="key">
+          <div class="flex-wrap tab-content">
+            <div v-for="(item, index) in value"  :key="index" class="card-wrap">
+              <el-card shadow="hover" v-if="index < 10" class="card-body" >
+                <img :src="`/static/imgs/some.jpg`" class="image" @click="goDetailPage(item)">
+                <p class="title" @click="goDetailPage(item)" :title="item.patentName">{{item.patentName}}</p>
+                <div class="flex-between" @click="goDetailPage(item)">
+                  <span class="price1">￥{{item.price}}</span>
+                  <span class="price2"><span class="icon">VIP</span><span class="num">￥{{item.vipPrice}}</span></span>
                 </div>
               </el-card>
-            </template>
+            </div>
           </div>
-          <div class="center"><el-button type="text" class="btn-style" @click="getMore(item.category)">查看更多>>>></el-button></div>
+          <div class="center"><el-button type="text" class="btn-style" @click="getMore(key)">查看更多>>>></el-button></div>
         </el-tab-pane>
       </el-tabs>
       <!-- 交易流程 -->
@@ -68,16 +68,17 @@ export default {
       searchCondition: '',
       tabPosition: 'top',
       keyWords: ['急救', '手机零部件制造', '自动', '包装', '加工'],
-      goodlist: [
-        {name: '人类生活必须', category: 'A', list: []},
-        {name: '作业和运输', category: 'B', list: []},
-        {name: '纺织和造纸', category: 'C', list: []},
-        {name: '化学和冶金', category: 'D', list: []},
-        {name: '固定构造', category: 'E', list: []},
-        {name: '机械工程', category: 'F', list: []},
-        {name: '物理', category: 'G', list: []},
-        {name: '电学', category: 'H', list: []}
-      ],
+      goodlist: {},
+      // goodlist: [
+      //   {name: '人类生活必须', category: 'A', list: []},
+      //   {name: '作业和运输', category: 'B', list: []},
+      //   {name: '纺织和造纸', category: 'C', list: []},
+      //   {name: '化学和冶金', category: 'D', list: []},
+      //   {name: '固定构造', category: 'E', list: []},
+      //   {name: '机械工程', category: 'F', list: []},
+      //   {name: '物理', category: 'G', list: []},
+      //   {name: '电学', category: 'H', list: []}
+      // ],
       // 专利流程
       flow: [
         {title: '挑选专利', discribe: `一对一专属顾问</br>挑选适合自己的专利`},
@@ -100,12 +101,12 @@ export default {
       }
     },
     // 查看更多
-    getMore (val = {}) {
+    getMore (key) {
       this.$store.commit('updateActivedTab', 'goodsList')
       this.$router.push({
         name: 'goodsList',
-        params: {
-          id: val.id || ''
+        query: {
+          category: key
         }
       })
     },
@@ -125,7 +126,8 @@ export default {
       }
       this.$ajax(getListUrl, params).then(res => {
         if (res.statusCode === 200) {
-          // let objectData = res.objectData || {}
+          let objectData = res.objectData || {}
+          this.goodlist = objectData
           console.log('res==', res)
         }
       })
@@ -155,7 +157,7 @@ export default {
     margin-bottom: 50px;
   }
   .search-wrap{
-    width: 500px;
+    width: 55%;
     text-align: left;
     margin: 0 auto;
   }
@@ -168,8 +170,8 @@ export default {
 }
 .card-body{
   cursor: pointer;
-  width: 220px;
-  margin-bottom: 20px;
+  // width: 220px;
+  // margin-bottom: 20px;
   /deep/.el-card__body{
     padding: 13px;
   }
@@ -178,6 +180,9 @@ export default {
   }
   .title{
     margin: 8px 0 26px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .price1{
     font-size: 18px;
@@ -273,9 +278,24 @@ export default {
     color:#ddd;
   }
 }
-
+.tab-content{
+  display: flex;
+  .card-wrap{
+    width: 20%;
+    margin-bottom: 20px;
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+}
+@media screen and (max-width:780px){
+  .tab-content{
+    .card-wrap {
+      width: 50%;
+    }
+  }
+}
 /deep/.el-tabs__item{
-  min-width: 143px;
+  min-width: 100px;
   text-align: center;
 }
 /deep/.el-tabs__item{

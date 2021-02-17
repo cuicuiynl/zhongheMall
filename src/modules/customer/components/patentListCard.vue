@@ -16,8 +16,9 @@
         <div class="flex-v-center">
           零售价：<span class="price">￥{{patent.price}}</span>
           <img src="/static/imgs/vipLog.png" class="ml5"> <span class="red ml5">￥<span class="vip-price">{{patent.vipPrice}}</span></span>
-          <el-button type="danger" size="small" class="ml20" @click="tip">立即购买</el-button>
-          <el-button size="small" class="ml10" @click="tip">加入购物车</el-button>
+          <!-- <el-button type="danger" size="small" class="ml20" @click="tip">立即购买</el-button> -->
+          <purchaseBtn  class="ml20" ></purchaseBtn>
+          <cartBtn class="ml10"></cartBtn>
         </div>
       </div>
     </div>
@@ -25,6 +26,9 @@
 </template>
 
 <script>
+import {patentTypeMap, lawStatusMap, inventorMap} from '@/common/constant.js'
+import purchaseBtn from './purchaseBtn'
+import cartBtn from './cartBtn'
 export default {
   name: 'patentListCard',
   props: {
@@ -35,33 +39,25 @@ export default {
       }
     }
   },
+  components: {
+    purchaseBtn,
+    cartBtn
+  },
   data () {
     return {
-      patentTypeMap: {
-        0: '不限',
-        1: '发明专利',
-        2: '新型实用专利',
-        3: '外观设计专利'
-      },
-      lawStatusMap: {
-        0: '不限',
-        1: '已下证',
-        2: '未下证'
-      },
-      inventorMap: {
-        0: '不限',
-        1: '提供',
-        2: '不提供',
-        3: '不公告'
-      }
+      patentTypeMap: {},
+      lawStatusMap: {},
+      inventorMap: {}
     }
   },
+  mounted () {
+    this.init()
+  },
   methods: {
-    tip () {
-      this.$alert('请联系高先生：13342903057 进行后续购买流程', '提示', {
-        confirmButtonText: '确定',
-        callback: action => {}
-      })
+    init () {
+      this.patentTypeMap = { ...patentTypeMap }
+      this.lawStatusMap = { ...lawStatusMap }
+      this.inventorMap = { ...inventorMap }
     },
     checkDetail () {
       this.$store.commit('updateActivedTab', this.$route.name)

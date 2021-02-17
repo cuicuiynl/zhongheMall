@@ -22,10 +22,14 @@ export default {
 
 <style lang="less" scoped>
 .page-width {
-  max-width: 1190px;
   margin: 0 auto;
   padding-top: 60px;
   min-height: 670px;
   // min-height: calc('100vh-400px');
+}
+@media screen and (min-width:1190px){
+ .page-width {
+   width: 1190px;
+  }
 }
 </style>

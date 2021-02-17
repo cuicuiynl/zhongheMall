@@ -12,28 +12,28 @@
           <img :src="`/static/imgs/some.jpg`" class="partent-image">
           </div>
           <div class="right-side">
-            <p class="right-title">一种可自动除臭的运动背包</p>
+            <p class="right-title">{{patentInfo.patentName}}</p>
             <div class="price-zone">
               <p class="mb10">
                 <span class="label">零售价</span>
-                <span class="price">￥20000</span>
+                <span class="price">￥{{patentInfo.price}}</span>
               </p>
               <p>
-                <span class="label">零售价</span>
-                <span class="vip-price">￥20000</span>
+                <span class="label">VIP价格</span>
+                <span class="vip-price">￥{{patentInfo.vipPrice}}</span>
               </p>
             </div>
             <ul class="info-zone">
-              <li><span class="label">专利号</span> 111</li>
-              <li><span class="label">专利类型</span> 111</li>
-              <li><span class="label">法律状态</span> 111</li>
-              <li><span class="label">缴费截止</span> 111</li>
-              <li><span class="label">发明人</span> 111</li>
-              <li><span class="label">销售状态</span> 111</li>
+              <li><span class="label">专利号</span> {{patentInfo.patentNo}}</li>
+              <li><span class="label">专利类型</span> {{patentTypeMap[patentInfo.patentType] || '-'}}</li>
+              <li><span class="label">法律状态</span> {{lawStatusMap[patentInfo.lawStatus] || '-'}}</li>
+              <li><span class="label">缴费截止</span> {{patentInfo.payDeadline || '-'}}</li>
+              <li><span class="label">发明人</span> {{inventorMap[patentInfo.inventor] || '-'}}</li>
+              <li><span class="label">销售状态</span> {{patentInfo.saleStatus || '-'}}</li>
             </ul>
             <div class="btn-wrap mt20">
-              <el-button type="danger" class="mr10">立即购买</el-button>
-              <el-button>加入购物车</el-button>
+              <purchaseBtn class="mr10"></purchaseBtn>
+              <cartBtn></cartBtn>
             </div>
             <p class="label mt20">此商品已全权委托平台寄卖，平台免费提供担保交易服务。</p>
           </div>
@@ -65,15 +65,24 @@
 
 <script>
 import pageModal from './components/pageModal'
+import purchaseBtn from './components/purchaseBtn'
+import cartBtn from './components/cartBtn'
+import {patentTypeMap, lawStatusMap, inventorMap} from '@/common/constant.js'
 const getDetailUrl = '/nine/product/productDetail'
 export default {
   name: 'patentDetails',
   components: {
-    pageModal
+    pageModal,
+    purchaseBtn,
+    cartBtn
   },
   data () {
     return {
-      patentNo: ''
+      patentNo: '',
+      patentTypeMap: {},
+      lawStatusMap: {},
+      inventorMap: {},
+      patentInfo: {}
     }
   },
   mounted () {
@@ -81,6 +90,9 @@ export default {
   },
   methods: {
     init () {
+      this.patentTypeMap = { ...patentTypeMap }
+      this.lawStatusMap = { ...lawStatusMap }
+      this.inventorMap = { ...inventorMap }
       this.patentNo = this.$route.query.patentNo
       this.getList()
     },
@@ -90,8 +102,7 @@ export default {
       }
       this.$ajax(getDetailUrl, params).then(res => {
         if (res.statusCode === 200) {
-          // let objectData = res.objectData || {}
-          console.log('getDetailUrl--res==', res)
+          this.patentInfo = res.objectData || {}
         }
       })
     }
@@ -109,9 +120,12 @@ export default {
   padding: 30px 20px;
   border-bottom: 1px solid #ddd;
 }
+.adv-image{
+  width: 100%;
+}
 .left-side{
     flex-shrink: 0;
-    width: 260px;
+    width: 26%;
     padding-right: 20px;
     .partent-image{
       width: 100%;
