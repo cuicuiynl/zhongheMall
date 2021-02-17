@@ -1,3 +1,4 @@
+/*主题红 黑-- #B12020 #353538 */
 .flex-only {
   display: flex;
 }
@@ -21,55 +22,63 @@
   text-align: center;
 }
 .el-breadcrumb__inner.is-link:hover {
-  color: #14a8bd;
+  /* color: #14a8bd; */
+  color: #b12020;
 }
 .zh-theme {
-  color: #14a8bd;
+  /* color: #14a8bd; */
+  color: #b12020;
 }
 .pointer {
   cursor: pointer;
 }
-.w100p{
+.w100p {
   width: 100%;
 }
 .zh-theme-btn {
-  color: #14a8bd;
-  border: 1px solid #14a8bd;
+  /* color: #14a8bd; */
+  color: #b12020;
+  border: 1px solid #d88989;
   cursor: pointer;
 }
 .zh-theme-border {
-  border: 1px solid #14a8bd;
+  /* border: 1px solid #14a8bd; */
+  border: 1px solid #b12020;
 }
 .zh-theme-bg {
   background: #daf6fa;
 }
 .zh-theme-bg2 {
-  background: #14a8bd;
+  /* background: #14a8bd; */
+  background: #b12020;
 }
 .actived {
-  color: #14a8bd;
+  /* color: #14a8bd; */
+  color: #b12020;
 }
 .zh-theme:hover {
-  color: #14a8bd;
+  /* color: #14a8bd; */
+  color: #b12020;
 }
 .zh-a-theme:hover {
   cursor: pointer;
-  color: #14a8bd;
+  /* color: #14a8bd; */
+  color: #b12020;
 }
 .el-tabs__item.is-active {
-  color: #14a8bd;
+  /* color: #14a8bd; */
+  color: #b12020;
 }
 .el-tabs__item:hover {
-  color: #14a8bd;
+  /* color: #14a8bd; */
+  color: #b12020;
   cursor: pointer;
 }
 .el-tabs__active-bar {
-  background-color: #14a8bd;
+  /* background-color: #14a8bd; */
+  background-color: #b12020;
 }
-.page-width {
-  max-width: 1190px;
-  margin: 0 auto;
-}
+
 .pannel {
   padding: 20px;
   background: #fff;

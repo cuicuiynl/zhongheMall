@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="nav-wrap-wrap">
     <div class="nav-wrap">
-        <companyLogo></companyLogo>
+        <companyLogo @click="changeTab('goods')"></companyLogo>
         <div class="nav-tab">
             <div class="tab-item"  :class="{'tab-active': item.value == activedTab}"
             @click="changeTab(item.value)"
@@ -40,11 +40,19 @@ export default {
     })
   },
   mounted () {
-    this.$store.commit('updateActivedTab', this.$route.name)
+    this.init()
   },
   methods: {
+    init () {
+      this.$store.commit('updateActivedTab', this.$route.name)
+      console.log('localStorage.zhongheUser==?', localStorage.zhongheUser)
+      let userInfo = localStorage.zhongheUser ? JSON.parse(localStorage.zhongheUser) : {loginFlag: true}
+      console.log('userInfo===导航栏初始化', userInfo)
+      this.$store.dispatch('updateUserInfoAction', userInfo)
+    },
     changeTab (val) {
       this.$store.commit('updateActivedTab', val)
+      console.log('点击点击tab', val)
       this.$router.push({name: val})
     }
   }
@@ -52,6 +60,13 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.nav-wrap-wrap{
+  position: fixed;
+  top:0;
+  width: 1190px;
+  background: #fff;
+  z-index: 99;
+}
 .nav-wrap{
     max-width: 1190px;
     height: 80px;
@@ -59,6 +74,7 @@ export default {
     display: flex;
     align-items: center;
     position: relative;
+    padding-left: 10px;
 }
 .nav-tab{
     display: flex;
@@ -80,7 +96,8 @@ export default {
         position: absolute;
         width: 20px;
         height: 4px;
-        background: #14a8bd;
+        // background: #14a8bd;
+        background: #B12020;;
         border-radius: 3px;
         left: 50%;
         transform: translateX(-50%);
@@ -97,7 +114,8 @@ export default {
       position: absolute;
       width: 20px;
       height: 4px;
-      background: #14a8bd;
+      background: #B12020;;
+      // background: #14a8bd;
       border-radius: 3px;
       left: 50%;
       transform: translateX(-50%);
@@ -111,6 +129,6 @@ export default {
     font-size: 14px;
     line-height: 40px;
     position: absolute;
-    right: 0;
+    right: 10px;
 }
 </style>

@@ -62,6 +62,7 @@ export default {
     }
   },
   mounted () {
+    console.log('进入商品列表')
     this.getProductList()
   },
   methods: {
@@ -96,9 +97,11 @@ export default {
     handleSizeChange (val) {
       this.pageInfo.pageNum = 1
       this.pageInfo.pageSize = val
+      this.getProductList()
     },
     handleCurrentChange (val) {
       this.pageInfo.pageNum = val
+      this.getProductList()
     }
   }
 }
@@ -108,11 +111,16 @@ export default {
 .good-items{
   margin-top: 20px;
   margin-bottom: 20px;
+  padding-bottom: 20px;
   box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
   .list-top{
     padding: 12px 20px;
     border-bottom: 1px solid #ddd;
     text-align: right;
   }
+}
+/deep/.el-pagination{
+  margin-top: 20px;
+  text-align: right;
 }
 </style>

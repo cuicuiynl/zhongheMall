@@ -11,7 +11,7 @@
               placeholder="请输入手机号"
               class="mb15 mt30"
               clearable
-              v-model="ruleForm.phoneNumber">
+              v-model.trim="ruleForm.phoneNumber">
             </el-input>
           </el-form-item>
           <el-form-item label="密码" prop="password">
@@ -19,8 +19,9 @@
                 :maxlength="12"
                 placeholder="请输入密码"
                 class="mb15 mt30"
+                type="password"
                 clearable
-                v-model="ruleForm.password">
+                v-model.trim="ruleForm.password">
               </el-input>
             </el-form-item>
            <template v-if="loginType=='reg'">
@@ -30,7 +31,7 @@
                 placeholder="请输入推荐人手机号（选填）"
                 class="mb15 mt30"
                 clearable
-                v-model="ruleForm.recommendNum">
+                v-model.trim="ruleForm.recommendNum">
               </el-input>
             </el-form-item>
           </template>
@@ -48,6 +49,7 @@
 <script>
 const loginUrl = '/nine/user/login'
 const registerUrl = '/nine/user/register'
+// import { setCookie } from '@/common/utils/utils.js'
 export default {
   name: 'login',
   props: {
@@ -115,9 +117,13 @@ export default {
       this.$ajax(loginUrl, params).then(res => {
         if (res.statusCode === 200) {
           let userInfo = {
-            loginFlag: true
+            loginFlag: true,
+            token: res.objectData.token,
+            ...res.objectData.userInfo
           }
-          this.$store.dispatch('userInfo', userInfo)
+          console.log('userInfo==登录', userInfo)
+          this.$store.dispatch('updateUserInfoAction', userInfo)
+          localStorage.setItem('zhongheUser', JSON.stringify(userInfo))
           this.close()
         } else {
           this.$message({
@@ -135,6 +141,10 @@ export default {
       }
       this.$ajax(registerUrl, params).then(res => {
         if (res.statusCode === 200) {
+          this.$message({
+            message: '注册成功，请登录',
+            type: 'warning'
+          })
           this.loginType = 'log'
           this.resetForm()
         } else {

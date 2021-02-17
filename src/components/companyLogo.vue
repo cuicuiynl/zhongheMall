@@ -1,6 +1,8 @@
 <template>
-  <!-- <img src=""></img> -->
-  <span class="company-icon zh-theme" >中禾知识产权</span>
+  <div>
+    <img src="/static/imgs/log2.png" width="80">
+  </div>
+  <!-- <span class="company-icon zh-theme" >中禾知识产权</span> -->
 </template>
 
 <script>

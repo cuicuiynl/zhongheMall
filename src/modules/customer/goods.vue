@@ -7,7 +7,7 @@
           <el-input
             style="width: 400px"
             placeholder="请搜索专利号/名称"
-            suffix-icon="el-icon-date"
+            suffix-icon="el-icon-search"
             size="large"
             clearable
             v-model="searchCondition">
@@ -23,10 +23,10 @@
         <el-tab-pane :label="item.name" v-for="item in goodlist" :key="item.category">
           <div class="flex-between flex-wrap">
             <template v-for="(item2, index2) in 12">
-              <el-card shadow="hover" :key="item2" v-if="index2 < 10" class="card-body">
-                <img :src="`/static/imgs/C-${item.category}.png`" class="image">
-                <p class="title">一种用于皮包自动除尘涂油保养的装置</p>
-                <div class="flex-between">
+              <el-card shadow="hover" :key="item2" v-if="index2 < 10" class="card-body" >
+                <img :src="`/static/imgs/some.jpg`" class="image" @click="goDetailPage(item2)">
+                <p class="title" @click="goDetailPage(item2)">一种用于皮包自动除尘涂油保养的装置</p>
+                <div class="flex-between" @click="goDetailPage(item2)">
                   <span class="price1">￥20000</span>
                   <span class="price2"><span class="icon">VIP</span><span class="num">￥15000</span></span>
                 </div>
@@ -40,7 +40,14 @@
       <div class="flow-wrap">
         <span class="flow-title">专利交易流程</span>
         <p class="flow-subtitle">优质专利 流程便捷</p>
-        <img src="/static/imgs/flow.png" class="flow-img">
+        <div class="flex-between-center flow-step-wrap" >
+          <div v-for="(item, index) in flow" :key="item.title">
+            <p><span class="flow-step">{{index+1}}</span></p>
+            <p class="flow-step-title">{{item.title}}</p>
+            <p v-html="item.discribe" class="flow-discribe"></p>
+          </div>
+        </div>
+        <!-- <img src="/static/imgs/flow.png" class="flow-img"> -->
       </div>
       <img src="/static/imgs/adv.png" class="w100p">
     </div>
@@ -69,6 +76,14 @@ export default {
         {name: '机械工程', category: 'F', list: []},
         {name: '物理', category: 'G', list: []},
         {name: '电学', category: 'H', list: []}
+      ],
+      // 专利流程
+      flow: [
+        {title: '挑选专利', discribe: `一对一专属顾问</br>挑选适合自己的专利`},
+        {title: '确认下单', discribe: `选择满意的专利</br>并确认下单`},
+        {title: '支付货款', discribe: `支持微信付款</br>付款到平台`},
+        {title: '过户交接', discribe: `专属顾问协助</br>完成过户交接`},
+        {title: '订单完成', discribe: `平台付款给卖家</br>订单完成`}
       ]
     }
   },
@@ -82,11 +97,22 @@ export default {
     },
     // 查看更多
     getMore (val = {}) {
-      this.$store.commit('updateActivedTab', this.$route.name)
+      this.$store.commit('updateActivedTab', 'goodsList')
       this.$router.push({
         name: 'goodsList',
         params: {
           id: val.id || ''
+        }
+      })
+    },
+    // 详情页
+    goDetailPage (item = {}) {
+      console.log('进入产品详情页')
+      this.$store.commit('updateActivedTab', 'patentDetails')
+      this.$router.push({
+        name: 'patentDetails',
+        params: {
+          id: item.id || ''
         }
       })
     }
@@ -99,12 +125,10 @@ export default {
   max-width: 1190px;
   margin-top:20px;
   margin-bottom: 20px;
-  // margin: 20px auto 0;
   border-radius: 10px;
   overflow: hidden;
-  // background: linear-gradient(45deg, #0885de, transparent);
-  // background: linear-gradient(90deg, rgba(102, 177, 255, .92), #1e5c9c,rgba(102, 177, 255, .92));
-  background: url('/static/imgs/banner.jpg') no-repeat;
+  background: linear-gradient(90deg, #B12020 60%, #353538);
+  // background: url('/static/imgs/banner.jpg') no-repeat;
   background-size: 100%;
   height: 340px;
   text-align: center;
@@ -173,13 +197,14 @@ export default {
   padding: 40px 0 100px 0;
   margin-top: 20px;
   margin-bottom: 30px;
-  background: url('/static/imgs/background.jpg') no-repeat;
-  background-size: 100%;
+  // background: url('/static/imgs/background.jpg') no-repeat;
+  // background-size: 100%;
+  background: linear-gradient(0deg, #B12020, #353538);
   // background: linear-gradient(90deg, rgba(102, 177, 255, .92), #1e5c9c,rgba(102, 177, 255, .92));
   border-radius: 10px;
-  background-size: 100%;
-  .flow-img{
+  .flow-step-wrap{
     width: 80%;
+    margin: 0 auto;
   }
   .flow-title{
     font-size: 30px;
@@ -213,10 +238,29 @@ export default {
     margin-top:20px;
     text-align: center;
   }
+  .flow-step{
+    color:#000;
+    font-size:18px;
+    display: inline-block;
+    width: 26px;
+    height: 26px;
+    line-height: 26px;
+    background: #d88989;
+    border:1px solid #B12020;
+    border-radius: 50px;
+  }
+  .flow-step-title{
+    color:white;
+    font-size:22px;
+    padding: 20px 40px;
+  }
+  .flow-discribe{
+    color:#ddd;
+  }
 }
 
 /deep/.el-tabs__item{
-  min-width: 148px;
+  min-width: 143px;
   text-align: center;
 }
 /deep/.el-tabs__item{

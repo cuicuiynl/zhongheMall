@@ -21,13 +21,14 @@
     </div>
     <div class="account-set">
       <p class="head">账户设置</p>
-      <p class="mb10"><span class="label">用户名</span></p>
-      <p class="mb10"><span class="label">昵称</span></p>
-      <p><span class="label">修改密码</span></p>
+      <p class="mb10"><span class="label">昵称：</span>{{userInfo.nickname}}</p>
+      <p class="mb10"><span class="label">用户名：</span>{{userInfo.mobile}}</p>
+      <!-- <p><span class="label">修改密码</span></p> -->
     </div>
     <div class="payment-record">
       <p class="head">充值记录</p>
       <el-table
+        v-if="tableData.length"
         :data="tableData"
         stripe
         border
@@ -53,15 +54,36 @@
           prop="status">
         </el-table-column>
       </el-table>
+      <el-pagination
+        v-if="pageInfo.total > 10"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="pageInfo.pageNum"
+        :page-sizes="[10, 50, 100, 200, 500]"
+        :page-size="pageInfo.pageSize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="pageInfo.total">
+      </el-pagination>
     </div>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+const getPayListUrl = ''
+const payVipUrl = ''
+// 编辑账户信息
+// const editUserInfo = ''
+
 export default {
   name: 'account',
   data () {
     return {
+      pageInfo: {
+        total: 0,
+        pageSize: 10,
+        pageNum: 1
+      },
       tableData: [{
         date: '2016-05-02',
         type: '333',
@@ -83,9 +105,41 @@ export default {
       }]
     }
   },
+  computed: {
+    ...mapState({
+      userInfo: state => state.userInfo
+    })
+  },
+  mounted () {
+    console.log('userInfo==?', this.userInfo)
+  },
   methods: {
+    getPayList () {
+      console.log('pageInfo', this.pageInfo)
+      let params = {}
+      console.log('getProductList--params', params)
+      this.$ajax(getPayListUrl, params).then(res => {
+        if (res.statusCode === 200) {
+          let objectData = res.objectData || {}
+          if (objectData.payList && objectData.payList.length) {
+            this.tableData = objectData.payList
+          }
+        }
+      })
+    },
     // 开通或续费会员
-    payVip () {}
+    payVip () {
+      this.$ajax(payVipUrl).then(res => {
+        if (res.statusCode === 200) {
+          this.getPayList()
+          this.$message({
+            showClose: true,
+            message: '充值成功',
+            type: 'success'
+          })
+        }
+      })
+    }
   }
 }
 </script>
@@ -177,6 +231,6 @@ export default {
 }
 .head{
   font-size: 16px;
-  padding-bottom: 10px;
+  padding-bottom: 20px;
 }
 </style>

@@ -29,37 +29,27 @@
       <el-table-column
         prop="status"
         label="状态"
-        width="100">
+        width="80">
+      </el-table-column>
+      <el-table-column
+        prop="saler"
+        label="卖家">
       </el-table-column>
       <el-table-column
         fixed="right"
         label="操作"
-        width="120">
+        width="80">
         <template slot-scope="scope">
-          <!-- 已付款或已失效 -->
           <el-button
             @click.native.prevent="deleteRow(scope.$index, tableData)"
             type="text"
             size="small">
-            删除
-          </el-button>
-          <!-- 待付款 -->
-           <el-button
-            @click.native.prevent="deleteRow(scope.$index, tableData)"
-            type="text"
-            size="small">
-            立即付款
-          </el-button>
-           <el-button
-            @click.native.prevent="deleteRow(scope.$index, tableData)"
-            type="text"
-            size="small">
-            取消订单
+            移除
           </el-button>
         </template>
       </el-table-column>
     </el-table>
-    <emptyPage v-if="!tableData.length" :imgUrl="imgUrl" :emptyText="imgText"></emptyPage>
+    <emptyPage v-if="!orderList.length" :imgUrl="imgUrl" :emptyText="imgText"></emptyPage>
     <el-pagination
       v-if="pageInfo.total > 10"
       @size-change="handleSizeChange"
@@ -81,24 +71,10 @@ export default {
     emptyPage
   },
   props: {
-    imgUrl: {
-      type: String,
-      defalut: '/static/imgs/empty-order.png'
-    },
-    // 页面数据请求
-    listUrl: {
-      type: String,
-      defalut: ''
-    },
-    // 删除
-    deleteUrl: {
-      type: String,
-      defalut: ''
-    },
-    imgText: {
-      type: String,
-      defalut: '暂无订单'
-    }
+    imgUrl: '/static/imgs/empty-order.png',
+    listUrl: '', // 页面数据请求
+    deleteUrl: '', // 删除
+    imgText: '暂无订单'
   },
   data () {
     return {
@@ -107,7 +83,7 @@ export default {
         pageSize: 10,
         pageNum: 1
       },
-      tableData: [{
+      orderList: [{
         partentName: 'zhuanlimingc',
         orderNum: '1222',
         partentNo: '111',
@@ -157,7 +133,7 @@ export default {
           let objectData = res.objectData || {}
           this.pageInfo.total = objectData.totalNum
           if (objectData.orderList && objectData.orderList.length) {
-            this.tableData = objectData.orderList
+            this.orderList = objectData.orderList
           }
         }
       })
