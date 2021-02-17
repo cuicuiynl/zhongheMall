@@ -46,7 +46,8 @@ export default {
     init () {
       this.$store.commit('updateActivedTab', this.$route.name)
       console.log('localStorage.zhongheUser==?', localStorage.zhongheUser)
-      let userInfo = localStorage.zhongheUser ? JSON.parse(localStorage.zhongheUser) : {loginFlag: true}
+      // {loginFlag: true}
+      let userInfo = localStorage.zhongheUser ? JSON.parse(localStorage.zhongheUser) : {}
       console.log('userInfo===导航栏初始化', userInfo)
       this.$store.dispatch('updateUserInfoAction', userInfo)
     },

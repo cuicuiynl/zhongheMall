@@ -5,7 +5,7 @@ const URL_LOGOUT = '/nine/user/logout'
 const state = {
   // 登陆人信息
   userInfo: {
-    loginFlag: true
+    loginFlag: false
   },
 
   activedTab: 'goods'
@@ -27,8 +27,8 @@ const actions = {
   },
   logout (context, payload) {
     // 暂时
-    window.localStorage.removeItem('zhongheUser')
-    context.commit('updateUserInfo', { loginFlag: false })
+    // window.localStorage.removeItem('zhongheUser')
+    // context.commit('updateUserInfo', { loginFlag: false })
     return new Promise((resolve, reject) => {
       Vue.prototype.$ajax(URL_LOGOUT).then((res) => {
         console.log('res===', res)
