@@ -62,7 +62,6 @@ export default {
     }
   },
   mounted () {
-    console.log('进入商品列表')
     this.getProductList()
   },
   methods: {
@@ -71,27 +70,23 @@ export default {
       this.getProductList()
     },
     serachKeyword () {
-      console.log('keyword', this.keyword)
       this.searchCondition.keyword = this.keyword
       this.getProductList()
     },
     getProductList () {
-      console.log('pageInfo', this.pageInfo)
       let params = {
         pageNum: this.pageInfo.pageNum,
         pageSize: this.pageInfo.pageSize,
         ...this.searchCondition
       }
-      console.log('getProductList--params', params)
       this.$ajax(getProductListUrl, params).then(res => {
         if (res.statusCode === 200) {
           let objectData = res.objectData || {}
           this.pageInfo.total = objectData.totalNum
-          if (objectData.productEntityList && objectData.productEntityList.length) {
-            this.productList = objectData.productEntityList
+          if (objectData.productEntityList) {
+            this.productList = objectData.productEntityList.length ? objectData.productEntityList : []
           }
         }
-        console.log('getTechnicalField-res', res)
       })
     },
     handleSizeChange (val) {

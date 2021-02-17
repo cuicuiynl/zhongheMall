@@ -1,29 +1,23 @@
 <template>
   <div class="patent-card">
-    <img :src="`/static/imgs/C-A.png`" class="image" @click="checkDetail">
+    <img :src="`/static/imgs/some.jpg`" class="image" @click="checkDetail">
     <div class="partent-info-wrap">
-      <!-- <p class="partent-name zh-a-theme" @click="checkDetail">{{patent.patentName}}</p>
+      <p class="partent-name zh-a-theme" @click="checkDetail">{{patent.patentName}}</p>
       <span class="partent-info">专利号：{{patent.patentNo}}</span>
       <span class="partent-info">领域：{{patent.tag}}</span>
-      <span class="partent-info">发明人：{{patent.inventor}}</span>
-      <span class="partent-info">专利类型：{{patent.patentNo}}</span>
-      <span class="partent-info">法律状态：{{patent.lawStatus}}</span> -->
-      <p class="partent-name zh-a-theme" @click="checkDetail">{{patent.ppatentName}}</p>
-      <span class="partent-info">专利号：{{patent.ppatentNo}}</span>
-      <span class="partent-info">领域：{{patent.ptag}}</span>
-      <span class="partent-info">发明人：{{patent.pinventor}}</span>
-      <span class="partent-info">专利类型：发明专利{{patent.patentType}}</span>
-      <span class="partent-info">法律状态：{{patent.plawStatus}}</span>
+      <span class="partent-info">发明人：{{inventorMap[patent.inventor] || '-'}}</span>
+      <span class="partent-info">专利类型：{{patentTypeMap[patent.patentType] || '-'}}</span>
+      <span class="partent-info">法律状态：{{inventorMap[patent.lawStatus] || '-'}}</span>
       <div class="flex-between-center">
         <div>
-          <span class="status-tip">未下证</span>
-          <span class="status-tip">预售</span>
+          <!-- <span class="status-tip">未下证</span>
+          <span class="status-tip">预售</span> -->
         </div>
         <div class="flex-v-center">
-          零售价：<span class="price">￥{{patent.pnoneVipPrice}}</span>
-          <img src="/static/imgs/vipLog.png" class="ml5"> <span class="red ml5">￥<span class="vip-price">{{patent.pvipPrice}}</span></span>
+          零售价：<span class="price">￥{{patent.price}}</span>
+          <img src="/static/imgs/vipLog.png" class="ml5"> <span class="red ml5">￥<span class="vip-price">{{patent.vipPrice}}</span></span>
           <el-button type="danger" size="small" class="ml20" @click="tip">立即购买</el-button>
-          <el-button size="small" class="ml10" @click="tip">预留</el-button>
+          <el-button size="small" class="ml10" @click="tip">加入购物车</el-button>
         </div>
       </div>
     </div>
@@ -41,6 +35,27 @@ export default {
       }
     }
   },
+  data () {
+    return {
+      patentTypeMap: {
+        0: '不限',
+        1: '发明专利',
+        2: '新型实用专利',
+        3: '外观设计专利'
+      },
+      lawStatusMap: {
+        0: '不限',
+        1: '已下证',
+        2: '未下证'
+      },
+      inventorMap: {
+        0: '不限',
+        1: '提供',
+        2: '不提供',
+        3: '不公告'
+      }
+    }
+  },
   methods: {
     tip () {
       this.$alert('请联系高先生：13342903057 进行后续购买流程', '提示', {
@@ -52,8 +67,8 @@ export default {
       this.$store.commit('updateActivedTab', this.$route.name)
       this.$router.push({
         name: 'patentDetails',
-        params: {
-          id: this.patent.id || ''
+        query: {
+          patentNo: this.patent.patentNo || ''
         }
       })
     }

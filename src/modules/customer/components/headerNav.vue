@@ -45,15 +45,12 @@ export default {
   methods: {
     init () {
       this.$store.commit('updateActivedTab', this.$route.name)
-      console.log('localStorage.zhongheUser==?', localStorage.zhongheUser)
       // {loginFlag: true}
       let userInfo = localStorage.zhongheUser ? JSON.parse(localStorage.zhongheUser) : {}
-      console.log('userInfo===导航栏初始化', userInfo)
       this.$store.dispatch('updateUserInfoAction', userInfo)
     },
     changeTab (val) {
       this.$store.commit('updateActivedTab', val)
-      console.log('点击点击tab', val)
       this.$router.push({name: val})
     }
   }

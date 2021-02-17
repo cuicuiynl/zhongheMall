@@ -9,7 +9,7 @@
       <div class="detail-content">
         <div class="flex-only detail-content-main">
           <div class="left-side">
-          <img :src="`/static/imgs/C-A.png`" class="partent-image">
+          <img :src="`/static/imgs/some.jpg`" class="partent-image">
           </div>
           <div class="right-side">
             <p class="right-title">一种可自动除臭的运动背包</p>
@@ -55,7 +55,8 @@
           <img src="/static/imgs/questions.png" class="ques-image">
         </div>
         <div class="center">
-          <span class="zh-theme-btn a-btn">查看更多常见问题</span>
+          <!-- // 暂时隐藏 -->
+          <!-- <span class="zh-theme-btn a-btn">查看更多常见问题</span> -->
         </div>
       </div>
     </div>
@@ -64,10 +65,36 @@
 
 <script>
 import pageModal from './components/pageModal'
+const getDetailUrl = '/nine/product/productDetail'
 export default {
   name: 'patentDetails',
   components: {
     pageModal
+  },
+  data () {
+    return {
+      patentNo: ''
+    }
+  },
+  mounted () {
+    this.init()
+  },
+  methods: {
+    init () {
+      this.patentNo = this.$route.query.patentNo
+      this.getList()
+    },
+    getList () {
+      let params = {
+        patentNo: this.patentNo
+      }
+      this.$ajax(getDetailUrl, params).then(res => {
+        if (res.statusCode === 200) {
+          // let objectData = res.objectData || {}
+          console.log('getDetailUrl--res==', res)
+        }
+      })
+    }
   }
 }
 </script>

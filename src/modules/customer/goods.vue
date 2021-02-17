@@ -56,6 +56,7 @@
 
 <script>
 import pageModal from './components/pageModal'
+const getListUrl = '/nine/product/categoriedProducts'
 export default {
   name: 'goods',
   components: {
@@ -87,6 +88,9 @@ export default {
       ]
     }
   },
+  mounted () {
+    this.getList()
+  },
   methods: {
     // 搜索
     handleSearch (val = '') {
@@ -107,12 +111,22 @@ export default {
     },
     // 详情页
     goDetailPage (item = {}) {
-      console.log('进入产品详情页')
       this.$store.commit('updateActivedTab', 'patentDetails')
       this.$router.push({
         name: 'patentDetails',
-        params: {
-          id: item.id || ''
+        query: {
+          patentNo: item.patentNo || ''
+        }
+      })
+    },
+    getList () {
+      let params = {
+        number: 10
+      }
+      this.$ajax(getListUrl, params).then(res => {
+        if (res.statusCode === 200) {
+          // let objectData = res.objectData || {}
+          console.log('res==', res)
         }
       })
     }
@@ -127,6 +141,7 @@ export default {
   margin-bottom: 20px;
   border-radius: 10px;
   overflow: hidden;
+  // background: #B12020;
   background: linear-gradient(90deg, #B12020 60%, #353538);
   // background: url('/static/imgs/banner.jpg') no-repeat;
   background-size: 100%;

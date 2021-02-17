@@ -7,10 +7,10 @@
       </div>
       <div v-if="selectedList.length">
         <span class="filter-title ml20">已选条件:</span>
-        <span v-for="(item) in selectedList"
+        <span v-for="(item, index) in selectedList"
         :key="item.key"
         class="filter-tag"
-        >{{item.label}}<span class="ml5">x</span></span>
+        >{{item.label}}<span class="ml5 pointer" @click="deleteCondition(index, item)">x</span></span>
       </div>
     </div>
     <el-card class="card" :class="{'hide': !pannelOpen}">
@@ -30,7 +30,7 @@
 
 <script>
 import techData from '../../../../static/mock/technicalField.json'
-// const technicalField = '/technicalField.do'
+const conditionsList = '/nine/product/conditionsList'
 
 export default {
   name: 'searchPannel',
@@ -39,20 +39,20 @@ export default {
       pannelOpen: true,
       selectedList: [],
       selectedMap: {
-        patentType: {value: 0},
-        tag: {value: 0},
-        lawStatus: {value: 0},
-        inventor: {value: 0}
+        patentType: {value: '0'},
+        tag: {value: '0'},
+        lawStatus: {value: '0'},
+        inventor: {value: '0'}
       },
       pannelList: [
         {
           key: 'patentType',
           title: '专利类型',
           list: [
-            {value: 0, label: '不限'},
-            {value: 1, label: '发明专利'},
-            {value: 2, label: '新型实用专利'},
-            {value: 3, label: '外观设计专利'}
+            {value: '0', label: '不限'},
+            {value: '1', label: '发明专利'},
+            {value: '2', label: '新型实用专利'},
+            {value: '3', label: '外观设计专利'}
           ]
         },
         {
@@ -64,27 +64,27 @@ export default {
           key: 'lawStatus',
           title: '法律状态',
           list: [
-            {value: 0, label: '不限'},
-            {value: 1, label: '已下证'},
-            {value: 2, label: '未下证'}
+            {value: '0', label: '不限'},
+            {value: '1', label: '已下证'},
+            {value: '2', label: '未下证'}
           ]
         },
         {
           key: 'inventor',
           title: '发明人',
           list: [
-            {value: 0, label: '不限'},
-            {value: 1, label: '提供'},
-            {value: 2, label: '不提供'},
-            {value: 3, label: '不公告'}
+            {value: '0', label: '不限'},
+            {value: '1', label: '提供'},
+            {value: '2', label: '不提供'},
+            {value: '3', label: '不公告'}
           ]
         }
       ]
     }
   },
   mounted () {
-    // this.getTechnicalField()
     this.init()
+    this.getConditionsList()
   },
   methods: {
     init () {
@@ -94,45 +94,56 @@ export default {
           label: item.tag
         }
       })
-      this.$set(this.pannelList[1], 'list', [{label: '不限', value: 0}, ...newData])
+      this.$set(this.pannelList[1], 'list', [{label: '不限', value: '0'}, ...newData])
     },
-    selectItem (val, key) {
-      console.log('selectItem-val, key', val, key)
-      this.$set(this.selectedMap, key, val)
+    // 获取搜索参数
+    getSearchMap () {
       let selectList = []
       let searchMap = {}
       for (let key in this.selectedMap) {
-        let val = this.selectedMap[key].value
-        if (val !== 0) {
+        let val = this.selectedMap[key].value + ''
+        if (val !== '0') {
           selectList.push({
             key,
             label: this.selectedMap[key].label
           })
         }
-        searchMap[key] = this.selectedMap[key].value
+        searchMap[key] = this.selectedMap[key].value === '0' ? null : this.selectedMap[key].value
       }
       this.selectedList = selectList
+      return searchMap
+    },
+    deleteCondition (idx, item) {
+      for (let key in this.selectedMap) {
+        if (key === item.key) {
+          this.selectedMap[key] = {
+            value: '0'
+          }
+        }
+      }
+      let searchMap = this.getSearchMap()
       this.$emit('searchPannel', searchMap)
     },
-    delSelected (index, type) {
-      this.selectedList.splice(index, 1)
-    }
+    selectItem (val, key) {
+      this.$set(this.selectedMap, key, val)
+      let searchMap = this.getSearchMap()
+      this.$emit('searchPannel', searchMap)
+    },
     // 暂时不用
-    // getTechnicalField () {
-    //   this.$ajax(technicalField).then(res => {
-    //     console.log('getTechnicalField-res', res)
-    //     if (res.statusCode === 200 && res.objectData) {
-    //       let data = res.objectData || []
-    //       let newData = data.map((item) => {
-    //         return {
-    //           value: item.tag,
-    //           label: item.tag
-    //         }
-    //       })
-    //       this.$set(this.pannelList[1], 'list', [{label: '不限', value: 0}, ...newData])
-    //     }
-    //   })
-    // }
+    getConditionsList () {
+      this.$ajax(conditionsList, {}, 'get').then(res => {
+        if (res.statusCode === 200 && res.objectData) {
+          // let data = res.objectData || []
+          // let newData = data.map((item) => {
+          //   return {
+          //     value: item.tag,
+          //     label: item.tag
+          //   }
+          // })
+          // this.$set(this.pannelList[1], 'list', [{label: '不限', value: 0}, ...newData])
+        }
+      })
+    }
   }
 }
 </script>
