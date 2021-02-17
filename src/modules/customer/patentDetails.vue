@@ -1,6 +1,6 @@
 <template>
   <pageModal>
-    <div slot="pageContent">
+    <div slot="pageContent" class="pt10">
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
         <el-breadcrumb-item :to="{ path: '/goodsList' }">专利市场</el-breadcrumb-item>
@@ -33,7 +33,7 @@
             </ul>
             <div class="btn-wrap mt20">
               <el-button type="danger" class="mr10">立即购买</el-button>
-              <el-button>预留</el-button>
+              <el-button>加入购物车</el-button>
             </div>
             <p class="label mt20">此商品已全权委托平台寄卖，平台免费提供担保交易服务。</p>
           </div>
