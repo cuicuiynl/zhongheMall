@@ -112,7 +112,8 @@ export default {
     login () {
       let params = {
         mobile: this.ruleForm.phoneNumber,
-        password: this.ruleForm.password
+        password: this.ruleForm.password,
+        customer: 1
       }
       this.$ajax(loginUrl, params).then(res => {
         if (res.statusCode === 200) {
