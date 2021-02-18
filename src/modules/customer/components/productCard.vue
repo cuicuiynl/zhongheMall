@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-card shadow="hover" class="card-body">
-      <img :src="`/static/imgs/C-A.png`" class="image">
+      <img :src="`/static/imgs/some.jpg`" class="image">
       <p class="title">一种用于皮包自动除尘涂油保养的装置</p>
       <div class="flex-between">
         <span class="price1">￥20000</span>

@@ -37,6 +37,7 @@
 import headerNav from './headerNav'
 import login from './login'
 import { mapState } from 'vuex'
+const URL_LOGOUT = '/nine/user/logout'
 export default {
   name: 'headerNavMall',
   components: {
@@ -84,7 +85,28 @@ export default {
     },
     // 登出
     logout () {
-      this.$store.dispatch('logout')
+      this.$ajax(URL_LOGOUT).then((res) => {
+        console.log('res===', res)
+        if (res.statusCode === 200) {
+          this.$router.push({name: 'goods'})
+          this.$message({
+            message: '退出成功',
+            type: 'warning'
+          })
+          window.localStorage.removeItem('zhongheUser')
+          this.$store.dispatch('updateUserInfoAction', { loginFlag: false })
+        } else {
+          this.$message({
+            message: '退出失败',
+            type: 'warning'
+          })
+        }
+      }).catch(
+        this.$message({
+          message: '服务器连接失败',
+          type: 'warning'
+        })
+      )
     }
   }
 }

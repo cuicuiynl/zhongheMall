@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="pt20">
     <pageModal>
       <div slot="pageContent">
         <el-tabs v-model="activeName" type="card" @tab-click="changeTab">

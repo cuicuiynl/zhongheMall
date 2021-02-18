@@ -7,12 +7,11 @@
         </div>
         <div>
           <p class="mb10 flex-v-center">
-            <span class="head-account">会员1111</span>
-            <span>普通会员</span>
-            <img src="/static/imgs/vipLog.png" class="vip-img">
+            <span class="head-account" v-if="userInfo.vipStatus">{{userInfo.nickname}}</span>
+            <img src="/static/imgs/vipLog.png" class="vip-img" v-if="userInfo.vipStatus">
           </p>
           <p class="vip-expire-time">到期时间：2080-06-26</p>
-          <p class="user-point">175分</p>
+          <!-- <p class="user-point">175分</p> -->
         </div>
       </div>
       <div class="user-head-right" @click="payVip">
@@ -25,7 +24,7 @@
       <p class="mb10"><span class="label">用户名：</span>{{userInfo.mobile}}</p>
       <!-- <p><span class="label">修改密码</span></p> -->
     </div>
-    <div class="payment-record">
+    <!-- <div class="payment-record">
       <p class="head">充值记录</p>
       <el-table
         v-if="tableData.length"
@@ -64,7 +63,7 @@
         layout="total, sizes, prev, pager, next, jumper"
         :total="pageInfo.total">
       </el-pagination>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -225,7 +224,7 @@ export default {
   margin-top: 20px;
   padding-top: 20px;
   padding-bottom: 20px;
-  border-bottom: 1px dashed #ddd;
+  // border-bottom: 1px dashed #ddd;
   margin-bottom: 20px;
   border-top: 1px dashed #ddd;
 }

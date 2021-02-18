@@ -1,6 +1,5 @@
-import Vue from 'vue'
+// import Vue from 'vue'
 // import { clearCookie } from './common/utils/utils'
-const URL_LOGOUT = '/nine/user/logout'
 
 const state = {
   // 登陆人信息
@@ -24,27 +23,6 @@ const actions = {
   },
   updateActivedTabAction (context, payload) {
     context.commit('updateActivedTab', payload)
-  },
-  logout (context, payload) {
-    // 暂时
-    // window.localStorage.removeItem('zhongheUser')
-    // context.commit('updateUserInfo', { loginFlag: false })
-    return new Promise((resolve, reject) => {
-      Vue.prototype.$ajax(URL_LOGOUT).then((res) => {
-        console.log('res===', res)
-        if (res.statusCode === 200) {
-          window.localStorage.removeItem('zhongheUser')
-          context.commit('updateUserInfo', { loginFlag: false })
-          // clearCookie()
-        } else {
-          reject(res)
-        }
-      }).catch(
-        e => {
-          reject(e)
-        }
-      )
-    })
   }
 }
 

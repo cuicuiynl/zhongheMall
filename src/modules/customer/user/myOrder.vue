@@ -44,12 +44,7 @@
             删除
           </el-button>
           <!-- 待付款 -->
-           <el-button
-            @click.native.prevent="deleteRow(scope.$index, tableData)"
-            type="text"
-            size="small">
-            立即付款
-          </el-button>
+           <purchaseBtn btnType="text"></purchaseBtn>
            <el-button
             @click.native.prevent="deleteRow(scope.$index, tableData)"
             type="text"
@@ -75,9 +70,11 @@
 
 <script>
 import emptyPage from '@/components/emptyPage'
+import purchaseBtn from '../components/purchaseBtn'
 
 export default {
   components: {
+    purchaseBtn,
     emptyPage
   },
   props: {

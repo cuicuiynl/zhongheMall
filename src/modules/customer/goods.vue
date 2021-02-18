@@ -19,23 +19,25 @@
         </div>
       </div>
       <!-- 产品列表 -->
-      <el-tabs :tab-position="tabPosition">
-        <el-tab-pane :label="key" v-for="(value, key) in goodlist" :key="key">
-          <div class="flex-wrap tab-content">
-            <div v-for="(item, index) in value"  :key="index" class="card-wrap">
-              <el-card shadow="hover" v-if="index < 10" class="card-body" >
-                <img :src="`/static/imgs/some.jpg`" class="image" @click="goDetailPage(item)">
-                <p class="title" @click="goDetailPage(item)" :title="item.patentName">{{item.patentName}}</p>
-                <div class="flex-between" @click="goDetailPage(item)">
-                  <span class="price1">￥{{item.price}}</span>
-                  <span class="price2"><span class="icon">VIP</span><span class="num">￥{{item.vipPrice}}</span></span>
-                </div>
-              </el-card>
+      <div class="products-warp">
+        <el-tabs :tab-position="tabPosition">
+          <el-tab-pane :label="key" v-for="(value, key) in goodlist" :key="key">
+            <div class="flex-wrap tab-content">
+              <div v-for="(item, index) in value"  :key="index" class="card-wrap">
+                <el-card shadow="hover" v-if="index < 10" class="card-body" >
+                  <img :src="`/static/imgs/some.jpg`" class="image" @click="goDetailPage(item)">
+                  <p class="title" @click="goDetailPage(item)" :title="item.patentName">{{item.patentName}}</p>
+                  <div class="flex-between" @click="goDetailPage(item)">
+                    <span class="price1">￥{{item.price}}</span>
+                    <span class="price2"><span class="icon">VIP</span><span class="num">￥{{item.vipPrice}}</span></span>
+                  </div>
+                </el-card>
+              </div>
             </div>
-          </div>
-          <div class="center"><el-button type="text" class="btn-style" @click="getMore(key)">查看更多>>>></el-button></div>
-        </el-tab-pane>
-      </el-tabs>
+            <div class="center" v-show="value.length>10"><el-button type="text" class="btn-style" @click="getMore(key)">查看更多>>>></el-button></div>
+          </el-tab-pane>
+        </el-tabs>
+      </div>
       <!-- 交易流程 -->
       <div class="flow-wrap">
         <span class="flow-title">专利交易流程</span>
@@ -167,6 +169,9 @@ export default {
     font-size: 14px;
     cursor: pointer;
   }
+}
+.products-warp{
+  height: 630px;
 }
 .card-body{
   cursor: pointer;

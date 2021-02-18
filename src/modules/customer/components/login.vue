@@ -47,9 +47,11 @@
 </template>
 
 <script>
+import utils from '@/common/utils/utils.js'
 const loginUrl = '/nine/user/login'
 const registerUrl = '/nine/user/register'
-// import { setCookie } from '@/common/utils/utils.js'
+
+console.log('utils==', utils)
 export default {
   name: 'login',
   props: {
@@ -112,7 +114,7 @@ export default {
     login () {
       let params = {
         mobile: this.ruleForm.phoneNumber,
-        password: this.ruleForm.password,
+        password: utils.encrypt(this.ruleForm.password),
         customer: 1
       }
       this.$ajax(loginUrl, params).then(res => {
@@ -122,7 +124,6 @@ export default {
             token: res.objectData.token,
             ...res.objectData.userInfo
           }
-          console.log('userInfo==登录', userInfo)
           this.$store.dispatch('updateUserInfoAction', userInfo)
           localStorage.setItem('zhongheUser', JSON.stringify(userInfo))
           this.close()
@@ -138,7 +139,7 @@ export default {
       let params = {
         mobile: this.ruleForm.phoneNumber,
         recommendNum: this.ruleForm.recommendNum,
-        password: this.ruleForm.password
+        password: utils.encrypt(this.ruleForm.password)
       }
       this.$ajax(registerUrl, params).then(res => {
         if (res.statusCode === 200) {
