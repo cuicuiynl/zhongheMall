@@ -7,7 +7,7 @@ export default {
   * @param {String}   keyStr  对密码加密的秘钥
   * @return {String}   加密的密文
   * */
-  encrypt (word, keyStr = 'ZHGHNJHGSHUYG82') { // 加密
+  encrypt (word, keyStr = 'ZHGHNJHGSHUYG823') { // 加密
     let key = CryptoJS.enc.Utf8.parse(keyStr)
     let srcs = CryptoJS.enc.Utf8.parse(word)
     let encrypted = CryptoJS.AES.encrypt(srcs, key, {
@@ -22,7 +22,7 @@ export default {
   * @param {String}   keyStr  对密码加密的秘钥
   * @return {String}   解密的明文
   * */
-  decrypt (word, keyStr = 'ZHGHNJHGSHUYG82') { // 解密
+  decrypt (word, keyStr = 'ZHGHNJHGSHUYG823') { // 解密
     let key = CryptoJS.enc.Utf8.parse(keyStr)
     let decrypt = CryptoJS.AES.decrypt(word, key, {
       mode: CryptoJS.mode.ECB,

@@ -85,9 +85,7 @@ export default {
         if (res.statusCode === 200) {
           let objectData = res.objectData || {}
           this.pageInfo.total = objectData.totalNum
-          if (objectData.productEntityList) {
-            this.productList = objectData.productEntityList.length ? objectData.productEntityList : []
-          }
+          this.productList = objectData.productEntityList && objectData.productEntityList.length ? objectData.productEntityList : []
         }
       })
     },

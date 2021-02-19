@@ -13,14 +13,27 @@
              <i slot="suffix" class="el-input__icon el-icon-search" @click="handleSearch(searchCondition)"></i>
           </el-input>
           <!-- <el-button round class="ml10" @click="handleSearch(searchCondition)">搜索</el-button> -->
-          <p class="mt10">
+          <!-- <p class="mt10">
             <span @click="handleSearch(item)" class="keyword-item" v-for="item in keyWords" :key="item">{{item}}</span>
-          </p>
+          </p> -->
         </div>
       </div>
       <!-- 产品列表 -->
       <div class="products-warp">
-        <el-tabs :tab-position="tabPosition">
+        <div class="flex-wrap tab-content">
+          <div v-for="(item, index) in goodlist"  :key="index" class="card-wrap">
+            <el-card shadow="hover" class="card-body" >
+              <img :src="`/static/imgs/some.jpg`" class="image" @click="goDetailPage(item)">
+              <p class="title" @click="goDetailPage(item)" :title="item.patentName">{{item.patentName}}</p>
+              <div class="flex-between" @click="goDetailPage(item)">
+                <span class="price1">￥{{item.price}}</span>
+                <span class="price2"><span class="icon">VIP</span><span class="num">￥{{item.vipPrice}}</span></span>
+              </div>
+            </el-card>
+          </div>
+        </div>
+        <div class="center"><el-button type="text" class="btn-style" @click="getMore(key)">查看更多>>>></el-button></div>
+        <!-- <el-tabs :tab-position="tabPosition">
           <el-tab-pane :label="key" v-for="(value, key) in goodlist" :key="key">
             <div class="flex-wrap tab-content">
               <div v-for="(item, index) in value"  :key="index" class="card-wrap">
@@ -36,7 +49,7 @@
             </div>
             <div class="center" v-show="value.length>10"><el-button type="text" class="btn-style" @click="getMore(key)">查看更多>>>></el-button></div>
           </el-tab-pane>
-        </el-tabs>
+        </el-tabs> -->
       </div>
       <!-- 交易流程 -->
       <div class="flow-wrap">
@@ -58,7 +71,8 @@
 
 <script>
 import pageModal from './components/pageModal'
-const getListUrl = '/nine/product/categoriedProducts'
+// const getListUrl = '/nine/product/categoriedProducts'
+const getListUrl = '/nine/product/getProductList'
 export default {
   name: 'goods',
   components: {
@@ -70,7 +84,7 @@ export default {
       searchCondition: '',
       tabPosition: 'top',
       keyWords: ['急救', '手机零部件制造', '自动', '包装', '加工'],
-      goodlist: {},
+      goodlist: [],
       // goodlist: [
       //   {name: '人类生活必须', category: 'A', list: []},
       //   {name: '作业和运输', category: 'B', list: []},
@@ -124,12 +138,13 @@ export default {
     },
     getList () {
       let params = {
-        number: 10
+        pageNum: 1,
+        pageSize: 10
       }
       this.$ajax(getListUrl, params).then(res => {
         if (res.statusCode === 200) {
-          let objectData = res.objectData || {}
-          this.goodlist = objectData
+          let objectData = res.objectData || []
+          this.goodlist = objectData.productEntityList && objectData.productEntityList.length ? objectData.productEntityList : []
           console.log('res==', res)
         }
       })
@@ -171,7 +186,8 @@ export default {
   }
 }
 .products-warp{
-  height: 630px;
+  height: 580px;
+  margin-top: 40px;
 }
 .card-body{
   cursor: pointer;

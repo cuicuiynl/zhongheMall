@@ -114,8 +114,7 @@ export default {
     login () {
       let params = {
         mobile: this.ruleForm.phoneNumber,
-        password: utils.encrypt(this.ruleForm.password),
-        customer: 1
+        password: utils.encrypt(this.ruleForm.password)
       }
       this.$ajax(loginUrl, params).then(res => {
         if (res.statusCode === 200) {
@@ -150,10 +149,10 @@ export default {
           this.loginType = 'log'
           this.resetForm()
         } else {
-          this.$message({
-            message: '注册失败',
-            type: 'warning'
-          })
+          // this.$message({
+          //   message: '注册失败',
+          //   type: 'warning'
+          // })
         }
       })
     },

@@ -58,6 +58,7 @@ axios.interceptors.response.use(
       case 409:
         Message({
           showClose: true,
+          type: 'warning',
           message: '您当前登陆超时或异常，请重新登陆'
         })
         rootVue.$store.commit('userInfo', { loginFlag: false })
@@ -66,7 +67,8 @@ axios.interceptors.response.use(
         console.log('lanjieqi---morenzhi===', res.data.statusCode)
         Message({
           showClose: true,
-          message: res.objectData
+          type: 'warning',
+          message: res.data.objectData
         })
     }
     // return Promise.resolve(res.data)
