@@ -1,5 +1,6 @@
 
 import userRouter from './modules/customer/user/router'
+import platformRouter from './modules/platform/router'
 
 const goodsView = r => require.ensure([], () => r(require('./modules/customer/goods')), 'goods')
 const goodsListView = r => require.ensure([], () => r(require('./modules/customer/goodsList')), 'goodsList')
@@ -12,6 +13,7 @@ let routes = [
   { path: '/goodsList', component: goodsListView, name: 'goodsList' },
   { path: '/patentDetails', component: patentDetails, name: 'patentDetails' },
   { path: '/confirmOrder', component: confirmOrder, name: 'confirmOrder' },
-  userRouter
+  userRouter,
+  platformRouter
 ]
 export default routes

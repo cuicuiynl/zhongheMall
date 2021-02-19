@@ -161,10 +161,10 @@ export default {
   border-radius: 10px;
   overflow: hidden;
   // background: #B12020;
-  background: linear-gradient(90deg, #B12020 60%, #353538);
-  // background: url('/static/imgs/banner.jpg') no-repeat;
-  background-size: 100%;
-  height: 340px;
+  // background: linear-gradient(90deg, #B12020 60%, #353538);
+  background: url('/static/imgs/banner.jpg') no-repeat;
+  // background-size: 100%;
+  height: 400px;
   text-align: center;
   .banner-text{
     color: #fff;

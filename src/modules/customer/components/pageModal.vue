@@ -23,7 +23,7 @@ export default {
 <style lang="less" scoped>
 .page-width {
   margin: 0 auto;
-  padding-top: 60px;
+  padding-top: 80px;
   min-height: 670px;
   // min-height: calc('100vh-400px');
 }

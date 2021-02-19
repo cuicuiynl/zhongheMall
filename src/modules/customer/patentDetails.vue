@@ -94,6 +94,7 @@ export default {
       this.lawStatusMap = { ...lawStatusMap }
       this.inventorMap = { ...inventorMap }
       this.patentNo = this.$route.query.patentNo
+      document.documentElement.scrollTop = 0
       this.getList()
     },
     getList () {
