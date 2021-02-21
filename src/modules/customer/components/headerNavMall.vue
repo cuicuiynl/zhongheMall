@@ -37,7 +37,7 @@
 import headerNav from './headerNav'
 import login from './login'
 import { mapState } from 'vuex'
-const URL_LOGOUT = '/nine/user/logout'
+const URL_LOGOUT = '/zhonghe/user/logout'
 export default {
   name: 'headerNavMall',
   components: {

@@ -30,7 +30,7 @@
 
 <script>
 // import techData from '../../../../static/mock/technicalField.json'
-const conditionsList = '/nine/product/conditionsList'
+const conditionsList = '/zhonghe/product/conditionsList'
 
 export default {
   name: 'searchPannel',

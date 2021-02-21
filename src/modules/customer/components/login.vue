@@ -48,8 +48,8 @@
 
 <script>
 import utils from '@/common/utils/utils.js'
-const loginUrl = '/nine/user/login'
-const registerUrl = '/nine/user/register'
+const loginUrl = '/zhonghe/user/login'
+const registerUrl = '/zhonghe/user/register'
 
 console.log('utils==', utils)
 export default {

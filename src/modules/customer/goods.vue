@@ -71,8 +71,8 @@
 
 <script>
 import pageModal from './components/pageModal'
-// const getListUrl = '/nine/product/categoriedProducts'
-const getListUrl = '/nine/product/getProductList'
+// const getListUrl = '/zhonghe/product/categoriedProducts'
+const getListUrl = '/zhonghe/product/getProductList'
 export default {
   name: 'goods',
   components: {

@@ -14,6 +14,6 @@ let routes = [
   { path: '/patentDetails', component: patentDetails, name: 'patentDetails' },
   { path: '/confirmOrder', component: confirmOrder, name: 'confirmOrder' },
   userRouter,
-  platformRouter
+  ...platformRouter
 ]
 export default routes

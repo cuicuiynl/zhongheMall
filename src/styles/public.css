@@ -21,6 +21,9 @@
 .center {
   text-align: center;
 }
+.text-right {
+  text-align: right;
+}
 .el-breadcrumb__inner.is-link:hover {
   /* color: #14a8bd; */
   color: #b12020;
@@ -78,7 +81,10 @@
   /* background-color: #14a8bd; */
   background-color: #b12020;
 }
-
+.astyle {
+  color: #1890ff;
+  cursor: pointer;
+}
 .pannel {
   padding: 20px;
   background: #fff;
@@ -128,4 +134,7 @@
 }
 .pt10 {
   padding-top: 10px;
+}
+.p4-20 {
+  padding: 20px;
 }

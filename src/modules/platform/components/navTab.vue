@@ -1,38 +1,74 @@
 <template>
-  <div class="nav-wrap">
+  <div class="nav-wrap flex-between-center">
     <companyLogo class="log-style"></companyLogo>
-    <el-menu
-      :default-active="activeIndex"
-      class="el-menu-demo"
-      mode="horizontal"
-      @select="handleSelect"
-      background-color="#545c64"
-      text-color="#fff"
-      active-text-color="rgb(251 109 109)">
-      <el-menu-item index="1">商品管理中心</el-menu-item>
-    </el-menu>
+    <div class="head-pic">
+      <el-popover
+      placement="bottom"
+      width="60"
+      trigger="hover">
+        <i slot="reference" class="el-icon-user"></i>
+        <div>
+          <div class="logout-btn" @click="logout">安全退出</div>
+        </div>
+      </el-popover>
+    </div>
+    <!-- <div class="head-pic">
+      <i class="el-icon-user-solid" style="margin-top:12px;"></i>
+        <div class="info-wrap-out">
+          <div class="info-wrap">
+            <div class="head-item" v-for="item in userSelectors" :key="item.value" @click="go(item.value)">
+                <span class="head-item-icon zh-theme" >
+                  <i :class="item.icon"></i>
+                </span> <span class="lable-style">{{item.label}}</span>
+            </div>
+            <div class="logout-btn" @click="logout">安全退出</div>
+          </div>
+        </div>
+    </div> -->
   </div>
 </template>
 
 <script>
 import companyLogo from '@/components/companyLogo'
+const URL_LOGOUT = '/zhonghe/user/logout'
 export default {
   name: 'navTab',
   components: { companyLogo },
   data () {
     return {
-      activeIndex: '1'
     }
   },
   methods: {
-    handleSelect (key, keyPath) {
-      console.log(key, keyPath)
+    // 登出
+    logout () {
+      this.$ajax(URL_LOGOUT).then((res) => {
+        console.log('res===', res)
+        if (res.statusCode === 200) {
+          this.$router.push({name: 'goods'})
+          this.$message({
+            message: '退出成功',
+            type: 'warning'
+          })
+          window.localStorage.removeItem('zhongheAdmin')
+          this.$store.dispatch('updateUserInfoAction', { loginFlag: false })
+        } else {
+          this.$message({
+            message: '退出失败',
+            type: 'warning'
+          })
+        }
+      }).catch(
+        this.$message({
+          message: '服务器连接失败',
+          type: 'warning'
+        })
+      )
     }
   }
 }
 </script>
 
-<style>
+<style lang="less" scoped>
   .nav-wrap{
     background: rgb(84, 92, 100);
     padding: 5px 16px;
@@ -42,10 +78,26 @@ export default {
     border-radius: 5px;
     margin-right: 16px;
   }
-  /* @media screen and (min-width:1190px){
-    .nav-width {
-      width: 1190px;
-      margin: 0 auto;
+  .head-pic{
+    width: 30px;
+    height:30px;
+    background: #ddd;
+    text-align: center;
+    line-height: 35px;
+    border-radius: 50%;
+    margin-right: 40px;
+    .el-icon-user{
+      font-size: 20px;
     }
-  } */
+  }
+  .logout-btn{
+   margin-top: 5px;
+   text-align: center;
+   text-align: center;
+   cursor: pointer;
+   color: #999;
+   &:hover{
+     color: #1890ff;
+   }
+}
 </style>

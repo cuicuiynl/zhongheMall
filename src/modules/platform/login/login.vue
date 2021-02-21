@@ -39,7 +39,7 @@
 <script>
 import utils from '@/common/utils/utils.js'
 import companyLogo from '@/components/companyLogo'
-const loginUrl = '/nine/user/login'
+const loginUrl = '/zhonghe/user/login'
 
 export default {
   components: { companyLogo },
@@ -61,6 +61,14 @@ export default {
           { min: 6, max: 12, message: '请输入6-12位密码', trigger: 'blur' }
         ]
       }
+    }
+  },
+  init () {
+    let userInfo = localStorage.zhongheAdmin ? JSON.parse(localStorage.zhongheAdmin) : null
+    if (userInfo) {
+      this.$router.push({
+        name: 'productManage'
+      })
     }
   },
   methods: {

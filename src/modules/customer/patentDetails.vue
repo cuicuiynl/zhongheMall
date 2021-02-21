@@ -68,7 +68,7 @@ import pageModal from './components/pageModal'
 import purchaseBtn from './components/purchaseBtn'
 import cartBtn from './components/cartBtn'
 import {patentTypeMap, lawStatusMap, inventorMap} from '@/common/constant.js'
-const getDetailUrl = '/nine/product/productDetail'
+const getDetailUrl = '/zhonghe/product/productDetail'
 export default {
   name: 'patentDetails',
   components: {
@@ -120,9 +120,6 @@ export default {
 .detail-content-main{
   padding: 30px 20px;
   border-bottom: 1px solid #ddd;
-}
-.adv-image{
-  width: 100%;
 }
 .left-side{
     flex-shrink: 0;

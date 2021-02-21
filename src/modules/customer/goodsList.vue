@@ -38,7 +38,7 @@ import patentListCard from './components/patentListCard'
 import emptyPage from '@/components/emptyPage'
 import pageModal from './components/pageModal'
 
-const getProductListUrl = '/nine/product/getProductList'
+const getProductListUrl = '/zhonghe/product/getProductList'
 export default {
   name: 'goodsList',
   components: {
