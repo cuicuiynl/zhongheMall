@@ -11,6 +11,7 @@
       :on-success="handleSuccess"
       :on-error="handleError"
       accept=".xlsx,.xls"
+      :headers="myHeaders"
       >
         <i class="el-icon-upload"></i>
         <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
@@ -109,6 +110,7 @@ export default {
   },
   data () {
     return {
+      myHeaders: {},
       pageInfo: {
         total: 0,
         pageSize: 10,
@@ -128,9 +130,15 @@ export default {
     }
   },
   mounted () {
+    this.init()
     // this.getProductList()
   },
   methods: {
+    init () {
+      let userInfo = localStorage.zhongheAdmin ? JSON.parse(localStorage.zhongheAdmin) : ''
+      let token = userInfo.token || ''
+      this.myHeaders.token = token
+    },
     getProductList () {
       let params = {}
       this.$ajax(productListUrl, params).then(res => {
