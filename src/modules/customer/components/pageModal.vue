@@ -4,6 +4,7 @@
       <headerNavMall></headerNavMall>
       <slot name="pageContent"></slot>
     </div>
+    <connectUs></connectUs>
     <pageFooter></pageFooter>
   </div>
 </template>
@@ -11,11 +12,13 @@
 <script>
 import headerNavMall from './headerNavMall'
 import pageFooter from './pageFooter'
+import connectUs from './connectUs'
 export default {
   name: 'pageModal',
   components: {
     headerNavMall,
-    pageFooter
+    pageFooter,
+    connectUs
   }
 }
 </script>

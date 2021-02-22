@@ -32,7 +32,8 @@
             </el-card>
           </div>
         </div>
-        <div class="center"><el-button type="text" class="btn-style" @click="getMore(key)">查看更多>>>></el-button></div>
+        <div class="center" v-if="total"><el-button type="text" class="btn-style" @click="getMore(key)">查看更多>>>></el-button></div>
+        <emptyPage v-if="!total" emptyText="哎呀，数据走丢了，请联系工作人员"></emptyPage>
         <!-- <el-tabs :tab-position="tabPosition">
           <el-tab-pane :label="key" v-for="(value, key) in goodlist" :key="key">
             <div class="flex-wrap tab-content">
@@ -71,16 +72,19 @@
 
 <script>
 import pageModal from './components/pageModal'
+import emptyPage from '@/components/emptyPage'
 // const getListUrl = '/zhonghe/product/categoriedProducts'
 const getListUrl = '/zhonghe/product/getProductList'
 export default {
   name: 'goods',
   components: {
-    pageModal
+    pageModal,
+    emptyPage
   },
   data () {
     return {
       // 搜索条件
+      total: 0,
       searchCondition: '',
       tabPosition: 'top',
       keyWords: ['急救', '手机零部件制造', '自动', '包装', '加工'],
@@ -144,6 +148,7 @@ export default {
       this.$ajax(getListUrl, params).then(res => {
         if (res.statusCode === 200) {
           let objectData = res.objectData || []
+          this.total = objectData.totalNum || 0
           this.goodlist = objectData.productEntityList && objectData.productEntityList.length ? objectData.productEntityList : []
           console.log('res==', res)
         }
@@ -186,7 +191,7 @@ export default {
   }
 }
 .products-warp{
-  height: 580px;
+  // height: 580px;
   margin-top: 40px;
 }
 .card-body{
