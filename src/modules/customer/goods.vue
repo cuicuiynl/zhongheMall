@@ -252,32 +252,7 @@ export default {
     width: 80%;
     margin: 0 auto;
   }
-  .flow-title{
-    font-size: 30px;
-    position: relative;
-    padding: 24px;
-    color: #fff;
-    &::before{
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: -3em;
-      transform: translateY(-50%);
-      background-color: silver;
-      height: 1px;
-      width: 3em;
-    }
-    &::after{
-      content: "";
-      position: absolute;
-      top: 50%;
-      right: -3em;
-      transform: translateY(-50%);
-      background-color: silver;
-      height: 1px;
-      width: 3em;
-    }
-  }
+  
   .flow-subtitle{
     color: #e9e9e9;
     margin-bottom: 40px;
@@ -302,6 +277,32 @@ export default {
   }
   .flow-discribe{
     color:#ddd;
+  }
+}
+.flow-title{
+  font-size: 30px;
+  position: relative;
+  padding: 24px;
+  color: #fff;
+  &::before{
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: -3em;
+    transform: translateY(-50%);
+    background-color: silver;
+    height: 1px;
+    width: 3em;
+  }
+  &::after{
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: -3em;
+    transform: translateY(-50%);
+    background-color: silver;
+    height: 1px;
+    width: 3em;
   }
 }
 .tab-content{
