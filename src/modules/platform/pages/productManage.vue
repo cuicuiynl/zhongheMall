@@ -7,7 +7,7 @@
     <div class="mb20">
       <el-upload
       drag
-      action="https://jsonplaceholder.typicode.com/posts/"
+      action="http://175.24.11.167:8088/zhonghe/upload/uploadFile"
       :on-success="handleSuccess"
       :on-error="handleError"
       accept=".xlsx,.xls"
