@@ -4,6 +4,7 @@ const productManage = r => require.ensure([], () => r(require('./pages/productMa
 const staffManage = r => require.ensure([], () => r(require('./pages/staffManage')), 'staffManage')
 let routes = [
   {
+    name: 'adminLogin',
     path: '/adminLogin',
     component: login
   }, {

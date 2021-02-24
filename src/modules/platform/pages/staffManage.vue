@@ -13,7 +13,7 @@
         label="员工姓名">
         <template slot-scope="scope">
           <el-input
-            v-if="scope.row.isEdit"
+            v-if="scope.row.isEdit || scope.row.isAdd"
             placeholder="请输入姓名"
             v-model="scope.row.editNam"
             size="small"
@@ -27,9 +27,9 @@
         label="账号">
         <template slot-scope="scope">
           <el-input
-            v-if="scope.row.account"
+            v-if="scope.row.isEdit || scope.row.isAdd"
             placeholder="请输入账号"
-            v-model="scope.row.editNam"
+            v-model="scope.row.account"
             size="small"
             clearable>
           </el-input>
@@ -41,9 +41,9 @@
         label="手机号">
         <template slot-scope="scope">
           <el-input
-            v-if="scope.row.phone"
+            v-if="scope.row.isEdit || scope.row.isAdd"
             placeholder="请输入手机号"
-            v-model="scope.row.editNam"
+            v-model="scope.row.phone"
             size="small"
             clearable>
           </el-input>
@@ -55,13 +55,25 @@
         label="登录密码">
         <template slot-scope="scope">
           <el-input
-            v-if="scope.row.isEdit"
+            v-if="scope.row.isAdd"
             placeholder="请输入密码"
             v-model="scope.row.password"
             size="small"
             clearable>
           </el-input>
-          <p v-else>{{ scope.row.password }}</p>
+          <p v-else>******</p>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="password"
+        label="网站客服">
+        <template slot-scope="scope">
+          <el-switch
+            :disabled="!(scope.row.isEdit || scope.row.isAdd)"
+            v-model="scope.row.isService"
+            active-color="#13ce66"
+            inactive-color="#999">
+          </el-switch>
         </template>
       </el-table-column>
       <el-table-column
@@ -69,10 +81,10 @@
         label="管理员">
         <template slot-scope="scope">
           <el-switch
-            :disabled="!scope.row.isEdit"
+            :disabled="!(scope.row.isEdit || scope.row.isAdd)"
             v-model="scope.row.isAdmin"
             active-color="#13ce66"
-            inactive-color="#ddd">
+            inactive-color="#999">
           </el-switch>
         </template>
       </el-table-column>
@@ -83,7 +95,7 @@
         <template slot-scope="scope">
           <el-button @click="cancelEdit(scope.row)" type="text" size="small" v-if="scope.row.isEdit">取消</el-button>
           <el-button @click="edit(scope.row)" type="text" size="small" v-else>编辑</el-button>
-          <el-button type="text" size="small" @click="del(scope.row)">删除</el-button>
+          <el-button type="text" size="small" @click="del(scope.row, scope.row.index)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -112,7 +124,7 @@ export default {
     addStaff () {
       this.tableData.push({
         name: '',
-        isEdit: true,
+        isAdd: true,
         isAdmin: false
       })
     },
@@ -132,8 +144,10 @@ export default {
     cancelEdit (item) {
       this.$set(item, 'isEdit', false)
     },
-    del (item) {
-
+    del (item, index) {
+      if (item.isAdd) {
+        this.tableData.splice(index, 1)
+      }
     }
   }
 }

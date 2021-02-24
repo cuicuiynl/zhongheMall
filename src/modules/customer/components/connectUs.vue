@@ -18,7 +18,7 @@
     popper-class="tel-poper"
     width="200"
     trigger="hover">
-      <img slot="reference" src="/static/imgs/chat.jpg" style="width:48px" class="image">
+      <img slot="reference" src="/static/imgs/chat.jpg" style="width:38px" class="image">
       <div class="tel-div">
         <img src="/static/imgs/wechat.jpg" class="img-in">
         请扫二维码关注我们
@@ -59,7 +59,7 @@ export default {
   }
   .image{
     border-radius: 5px;
-    width: 50px;
+    width: 40px;
     display: block;
     margin-bottom: 10px;
   }

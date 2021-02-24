@@ -81,6 +81,10 @@
   /* background-color: #14a8bd; */
   background-color: #b12020;
 }
+.el-pagination {
+  text-align: right;
+  margin-top: 20px;
+}
 .astyle {
   color: #1890ff;
   cursor: pointer;
@@ -134,6 +138,9 @@
 }
 .pt10 {
   padding-top: 10px;
+}
+.pb20 {
+  padding-bottom: 20px;
 }
 .p4-20 {
   padding: 20px;

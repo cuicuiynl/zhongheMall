@@ -20,7 +20,7 @@
           </el-menu-item>
         </el-menu>
       </el-col>
-      <el-col :span="20" class="content-height p4-20">
+      <el-col :span="21" class="content-height p4-20 main-content">
         <router-view></router-view>
       </el-col>
     </el-row>
@@ -49,12 +49,14 @@ export default {
   },
   methods: {
     init () {
-      this.$store.commit('updateActivedTab', this.$route.name)
-      // {loginFlag: true}
-      this.activeIndex = this.activedTab
-      console.log('this.activeIndex', this.activeIndex)
       let userInfo = localStorage.zhongheAdmin ? JSON.parse(localStorage.zhongheAdmin) : {}
       this.$store.dispatch('updateUserInfoAction', userInfo)
+      if (!userInfo.loginFlag) {
+        this.$router.push({name: 'adminLogin'})
+      } else {
+        this.$store.commit('updateActivedTab', this.$route.name)
+        this.activeIndex = this.activedTab
+      }
     },
     changeTab (val) {
       console.log('val--菜单', val)
@@ -69,5 +71,7 @@ export default {
 .content-height{
   height: calc(~"100vh - 80px")
 }
-
+.main-content{
+  overflow-y: scroll;
+}
 </style>

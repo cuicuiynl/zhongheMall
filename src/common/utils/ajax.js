@@ -25,14 +25,14 @@ axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8'
 axios.interceptors.request.use(
   config => {
     console.log('MockConfig', MockConfig)
-    console.log('config.url', config.url)
+    console.log('config=====', config)
     if (MockConfig[config.url]) {
       axios.defaults.baseURL = ''
       config.url = MockConfig[config.url]
       config.method = 'GET'
       return config
     }
-    if (!config.url) return
+    if (!config.url) return config || {}
     let userInfo = {}
     let hash = window.location.hash
     if (hash.indexOf('platform') > -1) {
@@ -44,14 +44,14 @@ axios.interceptors.request.use(
     config.headers.SESSION = ''
     // config.headers.common['Authentication'] = token
     config.headers.token = token
-    return config
+    return config || {}
   },
   error => {
-    Message({
-      showClose: true,
-      message: '请求超时',
-      type: 'warning'
-    })
+    // Message({
+    //   showClose: true,
+    //   message: '请求超时',
+    //   type: 'warning'
+    // })
     return Promise.reject(error)
   }
 )
@@ -92,11 +92,11 @@ axios.interceptors.response.use(
   },
   error => {
     console.log('error==拦截器', error)
-    Message({
-      showClose: true,
-      message: '请求超时',
-      type: 'warning'
-    })
+    // Message({
+    //   showClose: true,
+    //   message: '请求超时',
+    //   type: 'warning'
+    // })
     return Promise.reject(error)
   }
 )
@@ -104,6 +104,7 @@ axios.interceptors.response.use(
 export default{
   requestAPI (path, data = {}, type = 'post', options = {}) {
     console.log('requestAPI-type', path, type)
+    if (!path) return new Promise(() => {})
     return axios.request({
       method: type,
       url: path,

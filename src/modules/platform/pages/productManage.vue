@@ -21,22 +21,24 @@
         </el-tooltip> -->
       </el-upload>
     </div>
-    <div class="data-list">
+    <div class="data-list pb20">
       <el-table
       :data="tableData"
       border
+      height="400"
       style="width: 100%">
         <el-table-column
           fixed
-          prop="partentName"
+          prop="patentName"
+          width="250"
           label="专利名称">
         </el-table-column>
         <el-table-column
-          prop="partentNo"
+          prop="patentNo"
           label="专利号">
         </el-table-column>
         <el-table-column
-          prop="province"
+          prop="tag"
           label="标签">
         </el-table-column>
         <el-table-column
@@ -44,10 +46,12 @@
           label="专利分类">
         </el-table-column>
         <el-table-column
+          width="80"
           prop="price"
           label="价格">
         </el-table-column>
         <el-table-column
+          width="80"
           prop="vipPrice"
           label="VIP价格">
         </el-table-column>
@@ -69,12 +73,12 @@
         </el-table-column>
         <el-table-column
           prop="payDeadline"
-          label="截止日期">
+          label="销售截止日期">
         </el-table-column>
-        <el-table-column
+        <!-- <el-table-column
           prop="payDeadline"
           label="上架时间">
-        </el-table-column>
+        </el-table-column> -->
         <!-- <el-table-column
           fixed="right"
           label="操作"
@@ -102,7 +106,8 @@
 
 <script>
 import emptyPage from '@/components/emptyPage'
-const productListUrl = ''
+import {patentTypeMap, lawStatusMap, inventorMap} from '@/common/constant.js'
+const productListUrl = '/zhonghe/product/getProductList'
 export default {
   name: 'productManage',
   components: {
@@ -138,14 +143,21 @@ export default {
       let userInfo = localStorage.zhongheAdmin ? JSON.parse(localStorage.zhongheAdmin) : ''
       let token = userInfo.token || ''
       this.myHeaders.token = token
+      this.patentTypeMap = { ...patentTypeMap }
+      this.lawStatusMap = { ...lawStatusMap }
+      this.inventorMap = { ...inventorMap }
+      this.getProductList()
     },
     getProductList () {
-      let params = {}
+      let params = {
+        pageNum: this.pageInfo.pageNum,
+        pageSize: this.pageInfo.pageSize
+      }
       this.$ajax(productListUrl, params).then(res => {
         if (res.statusCode === 200) {
           let objectData = res.objectData || {}
           this.pageInfo.total = objectData.totalNum
-          this.productList = objectData.productEntityList && objectData.productEntityList.length ? objectData.productEntityList : []
+          this.tableData = objectData.productEntityList && objectData.productEntityList.length ? objectData.productEntityList : []
         }
       })
     },
