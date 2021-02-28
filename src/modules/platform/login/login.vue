@@ -18,6 +18,21 @@
                 v-model.trim="ruleForm.phoneNumber">
               </el-input>
             </el-form-item>
+            <el-form-item label="验证码" prop="code" v-if="loginType === 'forget'">
+              <div class="flex-between-center">
+                <el-input
+                  :maxlength="11"
+                  placeholder="请输入验证码"
+                  class="mb15 mt30 mr10"
+                  clearable
+                  v-model.trim="ruleForm.code">
+                </el-input>
+                <el-button class="code-btn" type="default" size="small" @click="getCode" :disabled="showCountDown">
+                  <span v-if="showCountDown">{{countDownNum}}S</span>
+                  <span v-else>发送验证码</span>
+                </el-button>
+              </div>
+            </el-form-item>
             <el-form-item label="密码" prop="password">
                 <el-input
                   :maxlength="12"
@@ -28,8 +43,20 @@
                   v-model.trim="ruleForm.password">
                 </el-input>
               </el-form-item>
+              <el-form-item label="密码确认" prop="password2" v-if="loginType === 'forget'">
+                <el-input
+                  :maxlength="12"
+                  placeholder="请再次输入密码"
+                  class="mb15 mt30"
+                  type="password"
+                  clearable
+                  v-model.trim="ruleForm.password2">
+                </el-input>
+              </el-form-item>
           </el-form>
-          <span class="login-btn zh-theme-bg2" @click="login" >登录</span>
+          <p class="login-btn zh-theme-bg2 mb20" @click="logBtn" >{{btnText}}</p>
+          <span class="astyle" @click="forgetPWD" v-if="loginType === 'log'">忘记密码</span>
+          <span class="astyle" @click="backLogin" v-if="loginType === 'forget'">登录</span>
         </div>
       </div>
     </div>
@@ -40,16 +67,23 @@
 import utils from '@/common/utils/utils.js'
 import companyLogo from '@/components/companyLogo'
 const loginUrl = '/zhonghe/user/login'
+const getCode = '/zhonghe/user/sendCode'
+const updatePwd = 'zhonghe/user/updatePwd'
 
 export default {
   components: { companyLogo },
   name: 'platformLogin',
   data () {
     return {
+      btnText: '登录',
       ruleForm: {
         phoneNumber: '', // 手机号
-        password: '' // 密码
+        password: '', // 密码
+        password2: '', // 密码确认
+        code: '' // 验证码
       },
+      showCountDown: false,
+      countDownNum: 60,
       loginType: 'log',
       rules: {
         phoneNumber: [
@@ -59,6 +93,13 @@ export default {
         password: [
           { required: true, message: '请输入密码', trigger: 'blur' },
           { min: 6, max: 12, message: '请输入6-12位密码', trigger: 'blur' }
+        ],
+        password2: [
+          { required: true, message: '请输入再次输入密码', trigger: 'blur' },
+          { min: 6, max: 12, message: '请输入6-12位密码', trigger: 'blur' }
+        ],
+        code: [
+          { required: true, message: '请输入验证码', trigger: 'blur' }
         ]
       }
     }
@@ -77,10 +118,24 @@ export default {
     }
   },
   methods: {
-    resetForm () {
-      this.$refs['ruleForm'].resetFields()
+    updatePWD () {
+      if (this.ruleForm.password === this.ruleForm.password2) {
+        this.$message.error('两次密码输入不一致')
+        return
+      }
+      let params = {
+        mobile: this.ruleForm.phoneNumber,
+        password: utils.encrypt(this.ruleForm.password),
+        code: this.ruleForm.code
+      }
+      this.$ajax(updatePwd, params).then(res => {
+        if (res.statusCode === 200) {
+          this.$message.success('修改成功')
+          this.backLogin()
+        }
+      })
     },
-    login () {
+    confirmLogin () {
       let params = {
         mobile: this.ruleForm.phoneNumber,
         password: utils.encrypt(this.ruleForm.password)
@@ -98,14 +153,68 @@ export default {
           this.$router.push({
             name: 'productManage'
           })
-        } else {
-          this.$message({
-            message: '登录失败',
-            type: 'warning'
-          })
         }
       })
+    },
+    logBtn () {
+      console.log('this.ruleForm.password', this.ruleForm.password)
+      this.$refs['ruleForm'].validate((valid) => {
+        if (valid) {
+          this.loginType === 'log' ? this.confirmLogin() : this.updatePWD()
+        }
+      })
+    },
+    countDown () {
+      this.timer && clearInterval(this.timer)
+      this.timer = setInterval(() => {
+        if (this.countDownNum > 0) {
+          this.countDownNum -= 1
+        } else {
+          this.showCountDown = false
+        }
+      }, 1000)
+    },
+    getCode () {
+      this.$refs['ruleForm'].validateField('phoneNumber', error => {
+        if (!error) {
+          this.confirmGetCode()
+        }
+        //  else {
+        //   return false;
+        // }
+      })
+    },
+    confirmGetCode () {
+      console.log('this.ruleForm.password', this.ruleForm.password)
+      this.showCountDown = true
+      this.countDown()
+      let params = {
+        mobile: this.ruleForm.phoneNumber
+      }
+      this.$ajax(getCode, params).then(res => {
+        if (res.statusCode === 200) {
+          // this.$message.success(res.objectData)
+          this.showCountDown = true
+          this.countDown()
+        }
+      })
+    },
+    backLogin () {
+      this.loginType = 'log'
+      this.btnText = '登录'
+      this.resetForm()
+    },
+    resetForm () {
+      this.$refs['ruleForm'].resetFields()
+    },
+    forgetPWD () {
+      this.loginType = 'forget'
+      this.btnText = '重置密码'
+      this.resetForm()
     }
+  },
+  destroyed () {
+    this.timer && clearInterval(this.timer)
   }
 }
 </script>
@@ -116,16 +225,18 @@ export default {
 }
 .login-warp{
   padding-top: 60px;
+  padding-bottom: 60px;
   background: #efc7c7;
-  height: 560px;
+  min-height: 560px;
   margin-top: 20px;
 }
-
+.code-btn{
+  width: 92px;
+}
 .login-box{
     position: relative;
     width: 370px;
     margin: 0 auto;
-    padding-top: 10px;
     min-height: 294px;
     background: #fff;
     border-radius: 10px;
@@ -165,7 +276,7 @@ export default {
   position: relative;
   width: 310px;
   margin: 0 auto;
-  padding-bottom: 60px;
+  padding-bottom: 20px;
 }
 /deep/.el-form--label-top .el-form-item__label{
   padding: 0;

@@ -56,7 +56,9 @@ axios.interceptors.request.use(
 // 数据返回拦截器
 axios.interceptors.response.use(
   res => {
-    switch (Number(res.data.statusCode)) {
+    let statusCode = Number(res.data.statusCode)
+    console.log('statusCode', statusCode)
+    switch (statusCode) {
       case 200:
         console.log('没有问题，请求成功了')
         break

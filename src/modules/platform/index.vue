@@ -14,7 +14,7 @@
             <i class="el-icon-box"></i>
             <span slot="title">商品管理</span>
           </el-menu-item>
-          <el-menu-item index="staffManage" v-if="userInfo.vipStatus">
+          <el-menu-item index="staffManage" v-if="userInfo.role === 1">
             <i class="el-icon-user"></i>
             <span slot="title">人员管理</span>
           </el-menu-item>
@@ -53,7 +53,8 @@ export default {
       let userInfo = sessionStorage.zhongheAdmin ? JSON.parse(sessionStorage.zhongheAdmin) : {}
       this.$store.dispatch('updateUserInfoAction', userInfo)
       if (!userInfo.loginFlag) {
-        this.$router.push({name: 'adminLogin'})
+        // this.$router.push({name: 'adminLogin'})
+        window.location.href = window.location.origin + '/#/adminLogin'
       } else {
         this.$store.commit('updateActivedTab', this.$route.name)
         this.activeIndex = this.activedTab
