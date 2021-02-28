@@ -24,8 +24,6 @@ axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8'
 // 发送请求拦截器
 axios.interceptors.request.use(
   config => {
-    console.log('MockConfig', MockConfig)
-    console.log('config=====', config)
     if (MockConfig[config.url]) {
       axios.defaults.baseURL = ''
       config.url = MockConfig[config.url]
@@ -36,9 +34,9 @@ axios.interceptors.request.use(
     let userInfo = {}
     let hash = window.location.hash
     if (hash.indexOf('platform') > -1) {
-      userInfo = localStorage.zhongheAdmin ? JSON.parse(localStorage.zhongheAdmin) : {}
+      userInfo = sessionStorage.zhongheAdmin ? JSON.parse(sessionStorage.zhongheAdmin) : {}
     } else {
-      userInfo = localStorage.zhongheUser ? JSON.parse(localStorage.zhongheUser) : {}
+      userInfo = sessionStorage.zhongheUser ? JSON.parse(sessionStorage.zhongheUser) : {}
     }
     let token = userInfo.token || ''
     config.headers.SESSION = ''
@@ -58,7 +56,7 @@ axios.interceptors.request.use(
 // 数据返回拦截器
 axios.interceptors.response.use(
   res => {
-    switch (res.data.statusCode) {
+    switch (Number(res.data.statusCode)) {
       case 200:
         console.log('没有问题，请求成功了')
         break
@@ -69,8 +67,8 @@ axios.interceptors.response.use(
           message: '您当前登陆超时或异常，请重新登陆'
         })
         rootVue.$store.commit('userInfo', { loginFlag: false })
-        window.localStorage.removeItem('zhongheUser')
-        window.localStorage.removeItem('zhongheAdmin')
+        window.sessionStorage.removeItem('zhongheUser')
+        window.sessionStorage.removeItem('zhongheAdmin')
         break
       default:
         console.log('lanjieqi---morenzhi===', res.data.statusCode)

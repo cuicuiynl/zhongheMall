@@ -44,12 +44,12 @@ export default {
       this.$ajax(URL_LOGOUT).then((res) => {
         console.log('res===', res)
         if (res.statusCode === 200) {
-          this.$router.push({name: 'goods'})
+          this.$router.push({name: 'adminLogin'})
           this.$message({
             message: '退出成功',
-            type: 'warning'
+            type: 'success'
           })
-          window.localStorage.removeItem('zhongheAdmin')
+          window.sessionStorage.removeItem('zhongheAdmin')
           this.$store.dispatch('updateUserInfoAction', { loginFlag: false })
         } else {
           this.$message({
@@ -58,10 +58,13 @@ export default {
           })
         }
       }).catch(
-        this.$message({
-          message: '服务器连接失败',
-          type: 'warning'
-        })
+        (err) => {
+          console.log('err-logout-管理端', err)
+          this.$message({
+            message: '服务器连接失败',
+            type: 'warning'
+          })
+        }
       )
     }
   }

@@ -2,7 +2,7 @@
   <div class="pt20">
     <div class="flex-between-center mb20">
       <h6>商品管理</h6>
-      <el-button size="small" type="default" class="mr20" @click="downLoad">下载模板</el-button>
+      <el-button size="small" type="info" class="mr20" @click="downLoad">下载模板</el-button>
     </div>
     <div class="mb20">
       <el-upload
@@ -20,6 +20,9 @@
           <el-button size="small" type="primary">上传专利</el-button>
         </el-tooltip> -->
       </el-upload>
+    </div>
+    <div class="text-right">
+      <el-button size="small" type="info" class="mr20 mb20" @click="deleteAll">删除全部</el-button>
     </div>
     <div class="data-list pb20">
       <el-table
@@ -108,6 +111,7 @@
 import emptyPage from '@/components/emptyPage'
 import {patentTypeMap, lawStatusMap, inventorMap} from '@/common/constant.js'
 const productListUrl = '/zhonghe/product/getProductList'
+const deletAllUrl = '/zhonghe/upload/deleteAllProduct'
 export default {
   name: 'productManage',
   components: {
@@ -140,7 +144,7 @@ export default {
   },
   methods: {
     init () {
-      let userInfo = localStorage.zhongheAdmin ? JSON.parse(localStorage.zhongheAdmin) : ''
+      let userInfo = sessionStorage.zhongheAdmin ? JSON.parse(sessionStorage.zhongheAdmin) : ''
       let token = userInfo.token || ''
       this.myHeaders.token = token
       this.patentTypeMap = { ...patentTypeMap }
@@ -162,7 +166,33 @@ export default {
       })
     },
     downLoad () {
-
+      let origin = window.location.origin
+      console.log('/static/template.xlsx', `${origin}/static/productInfo.xlsx`)
+      window.location.href = `${origin}/static/template.xlsx`
+    },
+    deleteAll () {
+      this.$confirm('此操作将删除全部商品信息, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.confirmDeletAll()
+      }).catch(() => {
+      })
+    },
+    confirmDeletAll () {
+      console.log('删除')
+      this.$ajax(deletAllUrl, {}, 'get').then(res => {
+        if (res.statusCode === 200) {
+          // let objectData = res.objectData || {}
+          // this.$message.success(objectData)
+          this.$message.success('删除成功')
+          this.getProductList()
+        }
+      }).catch((err) => {
+        console.log('err--删除报错', err)
+        this.$message.error('服务器连接失败')
+      })
     },
     // 文件上传成功时的钩子
     handleSuccess (res, file, fileList) {

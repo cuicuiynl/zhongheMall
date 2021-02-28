@@ -89,9 +89,17 @@ export default {
     this.loginType = this.logType
   },
   methods: {
+    init () {
+      if (this.loginType === 'log') {
+        let userInfoLocal = localStorage.zhongheUser ? JSON.parse(localStorage.zhongheUser) : null
+        if (userInfoLocal) {
+          this.ruleForm.phoneNumber = userInfoLocal.mobile
+          this.ruleForm.password = utils.decrypt(userInfoLocal.password)
+        }
+      }
+    },
     changeLogType (val) {
       this.resetForm()
-      this.password = ''
       this.loginType = val
     },
     loginOrReg () {
@@ -124,7 +132,8 @@ export default {
             ...res.objectData.userInfo
           }
           this.$store.dispatch('updateUserInfoAction', userInfo)
-          localStorage.setItem('zhongheUser', JSON.stringify(userInfo))
+          sessionStorage.setItem('zhongheUser', JSON.stringify(userInfo))
+          localStorage.setItem('zhongheUser', JSON.stringify(params))
           this.close()
         } else {
           this.$message({

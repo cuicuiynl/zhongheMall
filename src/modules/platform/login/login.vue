@@ -63,8 +63,13 @@ export default {
       }
     }
   },
-  init () {
-    let userInfo = localStorage.zhongheAdmin ? JSON.parse(localStorage.zhongheAdmin) : null
+  mounted () {
+    let userInfo = sessionStorage.zhongheAdmin ? JSON.parse(sessionStorage.zhongheAdmin) : null
+    let userInfoLocal = localStorage.zhongheAdmin ? JSON.parse(localStorage.zhongheAdmin) : null
+    if (userInfoLocal) {
+      this.ruleForm.phoneNumber = userInfoLocal.mobile
+      this.ruleForm.password = utils.decrypt(userInfoLocal.password)
+    }
     if (userInfo) {
       this.$router.push({
         name: 'productManage'
@@ -88,7 +93,8 @@ export default {
             ...res.objectData.userInfo
           }
           this.$store.dispatch('updateUserInfoAction', userInfo)
-          localStorage.setItem('zhongheAdmin', JSON.stringify(userInfo))
+          sessionStorage.setItem('zhongheAdmin', JSON.stringify(userInfo))
+          localStorage.setItem('zhongheAdmin', JSON.stringify(params))
           this.$router.push({
             name: 'productManage'
           })

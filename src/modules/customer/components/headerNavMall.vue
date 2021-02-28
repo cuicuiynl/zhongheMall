@@ -93,7 +93,7 @@ export default {
             message: '退出成功',
             type: 'warning'
           })
-          window.localStorage.removeItem('zhongheUser')
+          window.sessionStorage.removeItem('zhongheUser')
           this.$store.dispatch('updateUserInfoAction', { loginFlag: false })
         } else {
           this.$message({

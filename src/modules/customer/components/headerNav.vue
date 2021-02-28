@@ -46,7 +46,7 @@ export default {
     init () {
       this.$store.commit('updateActivedTab', this.$route.name)
       // {loginFlag: true}
-      let userInfo = localStorage.zhongheUser ? JSON.parse(localStorage.zhongheUser) : {}
+      let userInfo = sessionStorage.zhongheUser ? JSON.parse(sessionStorage.zhongheUser) : {}
       this.$store.dispatch('updateUserInfoAction', userInfo)
     },
     changeTab (val) {

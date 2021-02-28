@@ -14,7 +14,7 @@
             <i class="el-icon-box"></i>
             <span slot="title">商品管理</span>
           </el-menu-item>
-          <el-menu-item index="staffManage">
+          <el-menu-item index="staffManage" v-if="userInfo.vipStatus">
             <i class="el-icon-user"></i>
             <span slot="title">人员管理</span>
           </el-menu-item>
@@ -36,7 +36,8 @@ export default {
   },
   computed: {
     ...mapState({
-      activedTab: state => state.activedTab
+      activedTab: state => state.activedTab,
+      userInfo: state => state.userInfo
     })
   },
   data () {
@@ -49,7 +50,7 @@ export default {
   },
   methods: {
     init () {
-      let userInfo = localStorage.zhongheAdmin ? JSON.parse(localStorage.zhongheAdmin) : {}
+      let userInfo = sessionStorage.zhongheAdmin ? JSON.parse(sessionStorage.zhongheAdmin) : {}
       this.$store.dispatch('updateUserInfoAction', userInfo)
       if (!userInfo.loginFlag) {
         this.$router.push({name: 'adminLogin'})
